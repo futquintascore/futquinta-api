@@ -1,5 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 
-const { game, player } = new PrismaClient();
+const prisma = new PrismaClient({ errorFormat: 'minimal' });
 
-export { game, player };
+const GameModel = prisma.game;
+const PlayersProfile = prisma.playerProfile;
+const PlayersStats = prisma.playerStats;
+
+export { GameModel, PlayersProfile, PlayersStats, prisma };
