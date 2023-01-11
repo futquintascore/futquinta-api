@@ -1,7 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Game } from '../entities/Game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
+  async update(id: number, _reqBody: any): Promise<Game> {
+    try {
+      const updatedGame = await GameModel.update({
+        where: { id },
+        data: { ..._reqBody },
+      });
+      return updatedGame;
+    } catch (err) {
+      throw new Error('generic error');
+    }
+  }
   async listById(id: number): Promise<Game> {
     try {
       const singleGame = await GameModel.findUniqueOrThrow({
