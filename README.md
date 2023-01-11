@@ -36,8 +36,8 @@
 - [x] Create e game X
 - [x] Find all games with filters
 - [x] Find one game
-- [ ] Update a game
-- [ ] Delete a game
+- [x] Update a game
+- [x] Delete a game
 - [ ] Create a player stat
 - [ ] update a player stat
 - [ ] increment player stats to player profile
@@ -50,3 +50,4 @@
 # Other tasks
 
 -[x] Remove all console log from useCases
+-[ ] Treat all prisma client errors with codes

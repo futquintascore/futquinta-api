@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { createGameController } from '../useCases/create-game';
+import { deleteGameController } from '../useCases/delete-game';
 import { findAllGamesController } from '../useCases/find-all-games';
 import { findOneGameController } from '../useCases/find-one-game';
 import { updateGameController } from '../useCases/update-game';
@@ -26,7 +27,7 @@ gameRouter.put('/:id', (req, res) => {
 });
 
 gameRouter.delete('/:id', (req, res) => {
-  res.json('delete route' + req.params.id);
+  return deleteGameController.handle(req, res);
 });
 
 export default gameRouter;

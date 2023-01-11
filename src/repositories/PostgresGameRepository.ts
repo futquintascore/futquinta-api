@@ -3,6 +3,16 @@ import { Game } from '../entities/Game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
+  async delete(id: number): Promise<Game> {
+    try {
+      const deletedGame = await GameModel.delete({
+        where: { id },
+      });
+      return deletedGame;
+    } catch (err) {
+      throw new Error('generic error');
+    }
+  }
   async update(id: number, _reqBody: any): Promise<Game> {
     try {
       const updatedGame = await GameModel.update({
