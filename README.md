@@ -33,7 +33,7 @@
 - [x] List player profile by id
 - [x] Ppdate player profile
 - [x] Delete player profile
-- [ ] Create e game
+- [x] Create e game
 - [ ] Find all games with filters
 - [ ] Find one game
 - [ ] Update a game

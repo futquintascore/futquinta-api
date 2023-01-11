@@ -16,4 +16,42 @@ export class PostgresGameRepository implements IGamesRepository {
       throw new Error('generic error');
     }
   }
+  async list(
+    filter?: 'in_progress' | 'not_started' | 'finished' | undefined
+  ): Promise<Game[]> {
+    try {
+      if (filter === 'in_progress') {
+        const gamesList = await GameModel.findMany({
+          where: {
+            status: 'IN_PROGRESS',
+          },
+        });
+        return gamesList;
+      }
+
+      if (filter === 'not_started') {
+        const gamesList = await GameModel.findMany({
+          where: {
+            status: 'NOT_STARTED',
+          },
+        });
+        return gamesList;
+      }
+
+      if (filter === 'finished') {
+        const gamesList = await GameModel.findMany({
+          where: {
+            status: 'FINISHED',
+          },
+        });
+        return gamesList;
+      }
+
+      const gamesList = await GameModel.findMany();
+      return gamesList;
+    } catch (err) {
+      console.log(err);
+      throw new Error('gerenic error message');
+    }
+  }
 }
