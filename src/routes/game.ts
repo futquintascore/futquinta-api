@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { createGameController } from '../useCases/create-game';
-const router = Router();
 
-// Create
+const gameRouter = Router();
 
-router.post('/', (req, res) => {
+gameRouter.post('/', (req, res) => {
   return createGameController.handle(req, res);
 });
-export default router;
+
+export default gameRouter;

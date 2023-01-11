@@ -6,8 +6,8 @@ export class CreateGameController {
     const { whiteGoals, greenGoals } = req.body;
     try {
       const newGame = await this.CreateGameUseCase.execute({
-        whiteGoals,
         greenGoals,
+        whiteGoals,
       });
 
       res.status(201).json(newGame);

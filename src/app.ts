@@ -1,8 +1,7 @@
 import express from 'express';
 import { config } from 'dotenv';
 import playersRoute from './routes/player';
-import gamesRoute from './routes/game';
-
+import gameRouter from './routes/game';
 import cors from 'cors';
 
 config();
@@ -22,10 +21,8 @@ class App {
     this.app.use(express.json());
   }
   routes(): void {
-    // this.app.use('/v1/', homeRoute);
+    this.app.use('/v1/games', gameRouter);
     this.app.use('/v1/players', playersRoute);
-    this.app.use('/v1/games', gamesRoute);
-    // this.app.use('/v1/stats', statsRoute);
   }
 }
 export default new App().app;
