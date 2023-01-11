@@ -28,14 +28,14 @@
 
 # Use cases
 
-- [x] Create a player profile
-- [x] List all players profile
-- [x] List player profile by id
-- [x] Ppdate player profile
-- [x] Delete player profile
-- [x] Create e game
+- [x] Create a player profile X
+- [x] List all players profile X
+- [x] List player profile by id X
+- [x] Update player profile X
+- [x] Delete player profile X
+- [x] Create e game X
 - [x] Find all games with filters
-- [ ] Find one game
+- [x] Find one game
 - [ ] Update a game
 - [ ] Delete a game
 - [ ] Create a player stat
@@ -44,3 +44,9 @@
 - [ ] increment player victories, wins, draws, defeats
 - [ ] increment player man of the match score
 - [ ] set game team`s man of the match
+
+
+
+# Other tasks
+
+-[x] Remove all console log from useCases

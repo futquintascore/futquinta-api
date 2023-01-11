@@ -12,7 +12,6 @@ export class CreateGameController {
 
       res.status(201).json(newGame);
     } catch (err) {
-      console.log(err);
       res.status(400).json(e);
     }
   }

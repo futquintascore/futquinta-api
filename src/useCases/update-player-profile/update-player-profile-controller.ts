@@ -10,7 +10,6 @@ export class UpdatePlayerProfileController {
 
       res.status(200).json(updatedPlayer);
     } catch (err) {
-      console.log(err);
       res.status(400).json(err);
     }
   }

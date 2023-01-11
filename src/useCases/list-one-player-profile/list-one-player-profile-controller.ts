@@ -9,7 +9,6 @@ export class ListOnePlayerProfileController {
 
       res.status(200).json(listOneUser);
     } catch (err) {
-      console.log(err);
       res.status(400).json({ message: 'Generic Error' });
     }
   }

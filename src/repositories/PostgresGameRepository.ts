@@ -22,7 +22,6 @@ export class PostgresGameRepository implements IGamesRepository {
       });
       return newGame;
     } catch (err) {
-      console.log(err);
       throw new Error('generic error');
     }
   }
@@ -60,7 +59,6 @@ export class PostgresGameRepository implements IGamesRepository {
       const gamesList = await GameModel.findMany();
       return gamesList;
     } catch (err) {
-      console.log(err);
       throw new Error('gerenic error message');
     }
   }

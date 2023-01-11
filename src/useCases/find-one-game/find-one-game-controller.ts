@@ -9,7 +9,6 @@ export class FindOneGameController {
       const oneGame = await this.FindOneGame.execute(+id);
       res.status(200).json(oneGame);
     } catch (err) {
-      console.log(err);
       res.status(400).json(err);
     }
   }

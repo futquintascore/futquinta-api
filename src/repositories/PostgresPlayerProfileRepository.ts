@@ -23,7 +23,6 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
 
       return listPlayerById;
     } catch (err) {
-      console.log(err);
       throw new Error('Generic error');
     }
   }
@@ -36,8 +35,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
         data: { ..._reqBody },
       });
       return updatedPlayer;
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
       throw new Error('generic error');
     }
   }
@@ -48,7 +46,6 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       });
       return deletedUser;
     } catch (err) {
-      console.log(err);
       throw new Error('erro');
     }
   }
@@ -74,7 +71,6 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
 
       return newPlayerProfile;
     } catch (err) {
-      console.log(err);
       throw new Error('generic errorr');
     }
   }

@@ -8,7 +8,6 @@ export class CreatePlayerProfileController {
 
       res.status(201).json(allPlayersProfile);
     } catch (err) {
-      console.log(err);
       res.status(400).json(err);
     }
   }
