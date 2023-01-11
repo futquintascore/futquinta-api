@@ -34,7 +34,7 @@
 - [x] Ppdate player profile
 - [x] Delete player profile
 - [x] Create e game
-- [ ] Find all games with filters
+- [x] Find all games with filters
 - [ ] Find one game
 - [ ] Update a game
 - [ ] Delete a game

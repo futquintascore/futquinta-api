@@ -2,6 +2,16 @@ import { Game } from '../entities/Game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
+  async listById(id: number): Promise<Game> {
+    try {
+      const singleGame = await GameModel.findUniqueOrThrow({
+        where: { id },
+      });
+      return singleGame;
+    } catch (err) {
+      throw new Error('Generic error');
+    }
+  }
   async save(data: Game): Promise<Game> {
     try {
       const newGame = await GameModel.create({
