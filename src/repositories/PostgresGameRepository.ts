@@ -28,6 +28,9 @@ export class PostgresGameRepository implements IGamesRepository {
     try {
       const singleGame = await GameModel.findUniqueOrThrow({
         where: { id },
+        include: {
+          players: true,
+        },
       });
       return singleGame;
     } catch (err) {

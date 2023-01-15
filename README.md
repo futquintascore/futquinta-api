@@ -38,7 +38,7 @@
 - [x] Find one game
 - [x] Update a game
 - [x] Delete a game
-- [ ] Create a player stat
+- [x] Create a player stat
 - [ ] update a player stat
 - [ ] increment player stats to player profile
 - [ ] increment player victories, wins, draws, defeats
@@ -49,5 +49,6 @@
 
 # Other tasks
 
--[x] Remove all console log from useCases
--[ ] Treat all prisma client errors with codes
+- [x] Remove all console log from useCases
+- [ ] Treat all prisma client errors with codes
+- [ ] Unable the user to add the same player stat on a game

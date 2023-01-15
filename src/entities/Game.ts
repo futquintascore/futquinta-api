@@ -1,9 +1,3 @@
-enum Status {
-  NOT_STARTED,
-  IN_PROGRESS,
-  FINISHED,
-}
-
 export class Game {
   id?: number;
   whiteGoals: number;

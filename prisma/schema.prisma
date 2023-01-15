@@ -54,7 +54,7 @@ model Game {
   createdAt  DateTime        @default(now()) @map("created_at")
   updatedAt  DateTime        @updatedAt @map("updated_at")
   Player     PlayerProfile[]
-  playerId   Int?
+  playerId   Int?            @unique
 
   @@map("games")
 }
