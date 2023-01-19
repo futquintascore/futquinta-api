@@ -1,8 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Game } from '../entities/Game';
+import { finishGameFunction } from '../functions/finish-game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
+  async finishGame(id: number): Promise<Game> {
+    try {
+      const finishedGame = await finishGameFunction(id);
+
+      return finishedGame;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
   async delete(id: number): Promise<Game> {
     try {
       const deletedGame = await GameModel.delete({

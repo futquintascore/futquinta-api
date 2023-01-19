@@ -1,6 +1,8 @@
+import { updatePlayerStatsController } from './../useCases/update-player-stats/index';
 import { Router } from 'express';
-import { createPlayerProfileController } from '../useCases/create-player-profile';
+
 import { createPlayerStatsController } from '../useCases/create-player-stats';
+import { deletePlayerStatController } from '../useCases/delete-player-stats';
 
 const statRoute = Router();
 
@@ -9,7 +11,10 @@ statRoute.post('/:gameId', (req, res) => {
 });
 
 statRoute.put('/:gameId/:statId', (req, res) => {
-  res.json('update stat route');
+  return updatePlayerStatsController.handle(req, res);
+});
+statRoute.delete('/:id', (req, res) => {
+  return deletePlayerStatController.handle(req, res);
 });
 
 export default statRoute;

@@ -6,4 +6,5 @@ export interface IGamesRepository {
   listById(id: number): Promise<Game>;
   update(id: number, _reqBody: unknown): Promise<Game>;
   delete(id: number): Promise<Game>;
+  finishGame(id: number): Promise<Game>;
 }

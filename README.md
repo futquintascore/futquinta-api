@@ -39,9 +39,10 @@
 - [x] Update a game
 - [x] Delete a game
 - [x] Create a player stat
-- [ ] update a player stat
-- [ ] increment player stats to player profile
-- [ ] increment player victories, wins, draws, defeats
+- [x] update a player stat
+- [x] delete a player stat
+- [x] increment player stats to player profile
+- [x] increment player victories, wins, draws, defeats
 - [ ] increment player man of the match score
 - [ ] set game team`s man of the match
 
@@ -51,4 +52,14 @@
 
 - [x] Remove all console log from useCases
 - [ ] Treat all prisma client errors with codes
-- [ ] Unable the user to add the same player stat on a game
+- [x] Unable the user to add the same player stat on a game
+
+
+
+
+
+Incrementar os stats ao perfil principal
+decretar o resultado final do jogo (quem marcou mais gols)
+Adicionar os perfil do jogador a quantidade de V,D,E
+Setar o game como finished
+antes de tudo checar se o jogo ja esta terminado, só podendo finalizar um jogo se ele estiver in_progress

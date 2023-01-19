@@ -1,9 +1,11 @@
+import { FinishGameController } from './../useCases/finish-game/finish-game-controller';
 import { Router } from 'express';
 import { createGameController } from '../useCases/create-game';
 import { deleteGameController } from '../useCases/delete-game';
 import { findAllGamesController } from '../useCases/find-all-games';
 import { findOneGameController } from '../useCases/find-one-game';
 import { updateGameController } from '../useCases/update-game';
+import { finishGameController } from '../useCases/finish-game';
 
 const gameRouter = Router();
 //*List
@@ -28,6 +30,10 @@ gameRouter.put('/:id', (req, res) => {
 
 gameRouter.delete('/:id', (req, res) => {
   return deleteGameController.handle(req, res);
+});
+
+gameRouter.post('/:id/finish', (req, res) => {
+  return finishGameController.handle(req, res);
 });
 
 export default gameRouter;
