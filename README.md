@@ -56,10 +56,28 @@
 
 
 
+# Use Cases error handling
+
+- [x] Create a player profile 
+- [x] List player profile by id 
+- [x] Update player profile 
+- [x] Delete player profile 
+- [x] Create e game 
+- [x] Find all games with filters
+- [x] Find one game
+- [x] Update a game
+- [x] Delete a game
+- [x] Create a player stat
+- [x] update a player stat
+- [x] delete a player stat
+- [x] increment player stats to player profile
+- [ ] increment player man of the match score
+- [ ] set game team`s man of the match
+- [ ] finish game
 
 
-Incrementar os stats ao perfil principal
-decretar o resultado final do jogo (quem marcou mais gols)
-Adicionar os perfil do jogador a quantidade de V,D,E
-Setar o game como finished
-antes de tudo checar se o jogo ja esta terminado, só podendo finalizar um jogo se ele estiver in_progress
+
+# Prisma error type guard
+if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      }
+      throw err;

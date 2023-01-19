@@ -9,8 +9,8 @@ export class UpdateGameController {
       const { id: gameId } = await this.UpdateGame.execute(+id, req.body);
 
       return res.status(201).json(`O jogo ${gameId} foi atualizado com sucesso`);
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

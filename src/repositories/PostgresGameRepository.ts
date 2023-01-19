@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Prisma } from '@prisma/client';
 import { Game } from '../entities/Game';
 import { finishGameFunction } from '../functions/finish-game';
 import { GameModel } from '../services/prismaClient';
@@ -20,7 +21,10 @@ export class PostgresGameRepository implements IGamesRepository {
       });
       return deletedGame;
     } catch (err) {
-      throw new Error('generic error');
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new Error('Unable to find game in the database');
+      }
+      throw err;
     }
   }
   async update(id: number, _reqBody: any): Promise<Game> {
@@ -31,7 +35,10 @@ export class PostgresGameRepository implements IGamesRepository {
       });
       return updatedGame;
     } catch (err) {
-      throw new Error('generic error');
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new Error('Unable to find game in the database');
+      }
+      throw new Error('Unknow argument passed');
     }
   }
   async listById(id: number): Promise<Game> {
@@ -44,20 +51,23 @@ export class PostgresGameRepository implements IGamesRepository {
       });
       return singleGame;
     } catch (err) {
-      throw new Error('Generic error');
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new Error('Unable to find game in the database');
+      }
+      throw err;
     }
   }
-  async save(data: Game): Promise<Game> {
+  async save({ whiteGoals = 0, greenGoals = 0 }: Game): Promise<Game> {
     try {
       const newGame = await GameModel.create({
         data: {
-          whiteGoals: data.whiteGoals,
-          greenGoals: data.greenGoals,
+          whiteGoals,
+          greenGoals,
         },
       });
       return newGame;
     } catch (err) {
-      throw new Error('generic error');
+      throw new Error('Internal Server Error');
     }
   }
   async list(
@@ -94,7 +104,7 @@ export class PostgresGameRepository implements IGamesRepository {
       const gamesList = await GameModel.findMany();
       return gamesList;
     } catch (err) {
-      throw new Error('gerenic error message');
+      throw new Error('Internal Server Error');
     }
   }
 }

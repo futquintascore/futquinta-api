@@ -9,9 +9,8 @@ export class FindAllGameController {
       const listGames = await this.FindAllGames.execute(status);
 
       res.status(200).json(listGames);
-    } catch (err) {
-      console.log(err);
-      res.status(400).json(err);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

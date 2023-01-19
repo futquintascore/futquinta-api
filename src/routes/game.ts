@@ -1,4 +1,3 @@
-import { FinishGameController } from './../useCases/finish-game/finish-game-controller';
 import { Router } from 'express';
 import { createGameController } from '../useCases/create-game';
 import { deleteGameController } from '../useCases/delete-game';

@@ -11,9 +11,8 @@ export class CreatePlayerStatsController {
       const playerStats = await this.CreatePlayerStats.execute(+gameId, players);
 
       res.status(200).json(playerStats);
-    } catch (err) {
-      console.log(err);
-      res.status(400).json('erro debbug');
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

@@ -8,8 +8,8 @@ export class FindOneGameController {
     try {
       const oneGame = await this.FindOneGame.execute(+id);
       res.status(200).json(oneGame);
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

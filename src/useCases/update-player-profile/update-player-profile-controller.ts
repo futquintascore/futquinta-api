@@ -9,8 +9,8 @@ export class UpdatePlayerProfileController {
       const updatedPlayer = await this.UpdatePlayerProfileUseCase.execute(+id, req.body);
 
       res.status(200).json(updatedPlayer);
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

@@ -9,8 +9,8 @@ export class DeletePlayerProfileController {
       const { name } = await this.DeletePlayerProfile.execute(+id);
 
       res.status(200).json(`O usuario ${name} foi deletado com sucesso`);
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

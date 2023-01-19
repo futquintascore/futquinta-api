@@ -8,8 +8,8 @@ export class ListOnePlayerProfileController {
       const listOneUser = await this.ListOnePlayer.execute(+id);
 
       res.status(200).json(listOneUser);
-    } catch (err) {
-      res.status(400).json({ message: 'Generic Error' });
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

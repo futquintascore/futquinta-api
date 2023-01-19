@@ -8,9 +8,9 @@ export class DeleteGameController {
     try {
       const { id: gameId } = await this.DeleteGame.execute(+id);
 
-      return res.status(201).json(`O jogo ${gameId} foi deletado com sucesso`);
-    } catch (err) {
-      res.status(400).json(err);
+      return res.status(200).json(`O jogo ${gameId} foi deletado com sucesso`);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   }
 }

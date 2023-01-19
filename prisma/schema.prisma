@@ -36,6 +36,7 @@ model PlayerProfile {
   victories Int
   defeats   Int
   draws     Int
+  MOTMScore Int?          @map("MOTM_score")
   createdAt DateTime      @default(now()) @map("created_at")
   updatedAt DateTime      @updatedAt @map("updated_at")
   Stats     PlayerStats[]
@@ -48,8 +49,8 @@ model Game {
   id            Int             @id @default(autoincrement())
   whiteGoals    Int             @map("white_goals")
   greenGoals    Int             @map("green_goals")
-  whiteTeamMOTM String          @map("white_team_motm")
-  greenTeamMOTM String          @map("green_team_motm")
+  whiteTeamMOTM String?         @map("white_team_motm")
+  greenTeamMOTM String?         @map("green_team_motm")
   winnerTeam    Winner          @default(DRAW) @map("winner_team")
   status        Status          @default(NOT_STARTED)
   players       PlayerStats[]

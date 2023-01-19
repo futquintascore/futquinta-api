@@ -3,11 +3,16 @@
 import { PlayerProfile } from '../entities/PlayerProfile';
 import { IPlayerProfileRepository } from './IPlayersProfileRepository';
 import { PlayersProfile } from '../services/prismaClient';
+import { Prisma } from '@prisma/client';
 export class PostgresPlayerProfileRepository implements IPlayerProfileRepository {
   async list(): Promise<PlayerProfile[]> {
-    const playerProfileList = await PlayersProfile.findMany();
+    try {
+      const playerProfileList = await PlayersProfile.findMany();
 
-    return playerProfileList;
+      return playerProfileList;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
   }
   async listById(id: number): Promise<PlayerProfile> {
     try {
@@ -23,7 +28,12 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
 
       return listPlayerById;
     } catch (err) {
-      throw new Error('Generic error');
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (err.code === 'P2025') {
+          throw new Error('Unable to find player in the database');
+        }
+      }
+      throw err;
     }
   }
   async update(id: number, _reqBody: any): Promise<PlayerProfile> {
@@ -36,7 +46,13 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       });
       return updatedPlayer;
     } catch (err) {
-      throw new Error('generic error');
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        console.log(err);
+        if (err.code === 'P2025') {
+          throw new Error('Unable to find player in the database');
+        }
+      }
+      throw new Error('Unknow argument passed');
     }
   }
   async delete(id: number): Promise<PlayerProfile> {
@@ -46,7 +62,13 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       });
       return deletedUser;
     } catch (err) {
-      throw new Error('erro');
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        console.log(err);
+        if (err.code === 'P2025') {
+          throw new Error('Unable to find player in the database');
+        }
+      }
+      throw new Error('Internal server error');
     }
   }
   async save({
@@ -70,8 +92,16 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       });
 
       return newPlayerProfile;
-    } catch (err) {
-      throw new Error('generic errorr');
+    } catch (err: any) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (err.code === 'P2002') {
+          throw new Error('Name must be unique');
+        }
+        if (err.code === 'P1012') {
+          throw new Error(err.message);
+        }
+      }
+      throw new Error('Internal Server Error');
     }
   }
 }
