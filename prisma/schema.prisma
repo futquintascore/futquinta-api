@@ -27,20 +27,27 @@ enum Winner {
   DRAW
 }
 
+enum PlayerFunction {
+  OUTFIELDPLAYER
+  GOALKEEPER
+}
+
 model PlayerProfile {
-  id        Int           @id @default(autoincrement())
-  name      String        @unique
-  picture   String?
-  goals     Int
-  assists   Int
-  victories Int
-  defeats   Int
-  draws     Int
-  MOTMScore Int?          @map("MOTM_score")
-  createdAt DateTime      @default(now()) @map("created_at")
-  updatedAt DateTime      @updatedAt @map("updated_at")
-  Stats     PlayerStats[]
-  games     Game[]
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  picture       String?
+  goals         Int
+  assists       Int
+  goalsConceded Int?           @default(0)
+  victories     Int
+  defeats       Int
+  draws         Int
+  function      PlayerFunction @default(OUTFIELDPLAYER)
+  MOTMScore     Int?           @default(0) @map("MOTM_score")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  Stats         PlayerStats[]
+  games         Game[]
 
   @@map("players")
 }
@@ -49,8 +56,8 @@ model Game {
   id            Int             @id @default(autoincrement())
   whiteGoals    Int             @map("white_goals")
   greenGoals    Int             @map("green_goals")
-  whiteTeamMOTM String?         @map("white_team_motm")
-  greenTeamMOTM String?         @map("green_team_motm")
+  whiteTeamMOTM String?         @default("") @map("white_team_motm")
+  greenTeamMOTM String?         @default("") @map("green_team_motm")
   winnerTeam    Winner          @default(DRAW) @map("winner_team")
   status        Status          @default(NOT_STARTED)
   players       PlayerStats[]
@@ -63,18 +70,20 @@ model Game {
 }
 
 model PlayerStats {
-  id            Int           @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   name          String
   goals         Int
   assists       Int
   substituition Int
-  currentTeam   Team          @map("current_team")
-  player        PlayerProfile @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  goalsConceded Int?
+  function      PlayerFunction @default(OUTFIELDPLAYER)
+  currentTeam   Team           @map("current_team")
+  player        PlayerProfile  @relation(fields: [playerId], references: [id], onDelete: Cascade)
   playerId      Int
-  Game          Game?         @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  Game          Game?          @relation(fields: [gameId], references: [id], onDelete: Cascade)
   gameId        Int?
-  createdAt     DateTime      @default(now()) @map("created_at")
-  updatedAt     DateTime      @updatedAt @map("updated_at")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
 
   @@map("stats")
 }

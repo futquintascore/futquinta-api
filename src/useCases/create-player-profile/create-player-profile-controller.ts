@@ -11,6 +11,7 @@ export class CreatePlayerProfileController {
       victories = 0,
       defeats = 0,
       draws = 0,
+      MOTMScore = 0,
     } = req.body;
     try {
       const newPlayerProfile = await this.CreatePlayerProfileUseCase.execute({
@@ -21,6 +22,7 @@ export class CreatePlayerProfileController {
         defeats,
         draws,
         picture,
+        MOTMScore,
       });
 
       res.status(201).json(newPlayerProfile);

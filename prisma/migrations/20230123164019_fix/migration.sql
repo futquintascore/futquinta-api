@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "players" ALTER COLUMN "MOTM_score" SET DEFAULT 0,
+ALTER COLUMN "goalsConceded" SET DEFAULT 0;

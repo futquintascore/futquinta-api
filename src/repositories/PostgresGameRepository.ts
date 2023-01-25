@@ -2,12 +2,13 @@
 import { Prisma } from '@prisma/client';
 import { Game } from '../entities/Game';
 import { finishGameFunction } from '../functions/finish-game';
+
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
-  async finishGame(id: number): Promise<Game> {
+  async finishGame(id: number, whiteGoals: number, greenGoals: number): Promise<Game> {
     try {
-      const finishedGame = await finishGameFunction(id);
+      const finishedGame = await finishGameFunction(id, whiteGoals, greenGoals);
 
       return finishedGame;
     } catch (err: any) {
@@ -46,7 +47,11 @@ export class PostgresGameRepository implements IGamesRepository {
       const singleGame = await GameModel.findUniqueOrThrow({
         where: { id },
         include: {
-          players: true,
+          players: {
+            orderBy: {
+              goals: 'desc',
+            },
+          },
         },
       });
       return singleGame;

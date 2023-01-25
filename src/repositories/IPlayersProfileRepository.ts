@@ -5,8 +5,5 @@ export interface IPlayerProfileRepository {
   listById(id: number): Promise<PlayerProfile>;
   update(id: number, _reqBody: any): Promise<PlayerProfile>;
   delete(id: number): Promise<PlayerProfile>;
-  // addPlayerStatsToPlayerProfile(
-  //   id: number,
-  //   gameId: number
-  // ): Promise<PlayerProfile>;
+  incrementMOTMScore(id: number): Promise<PlayerProfile>;
 }

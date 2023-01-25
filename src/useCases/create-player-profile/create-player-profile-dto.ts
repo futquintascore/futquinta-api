@@ -6,4 +6,5 @@ export interface ICreatePlayerProfileDTO {
   victories: number;
   defeats: number;
   draws: number;
+  MOTMScore: number;
 }

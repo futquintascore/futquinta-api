@@ -1,7 +1,11 @@
 /* eslint-disable indent */
 import { GameModel, prisma } from '../services/prismaClient';
 
-export async function finishGameFunction(gameId: number) {
+export async function finishGameFunction(
+  gameId: number,
+  whiteGoalsScored: number,
+  greenGoalsScored: number
+) {
   return await prisma.$transaction(async ({ game, playerProfile }) => {
     const currentGame = await game.findUniqueOrThrow({
       where: {
@@ -14,6 +18,16 @@ export async function finishGameFunction(gameId: number) {
 
     if (currentGame.status === 'FINISHED') throw new Error('Game already finished');
     if (currentGame.status === 'NOT_STARTED') throw new Error('Game not started yet');
+
+    await game.update({
+      where: {
+        id: gameId,
+      },
+      data: {
+        whiteGoals: whiteGoalsScored,
+        greenGoals: greenGoalsScored,
+      },
+    });
 
     const updatedGame = await game.update({
       where: {
@@ -50,6 +64,7 @@ export async function finishGameFunction(gameId: number) {
               ? { increment: 1 }
               : { increment: 0 },
           draws: winnerTeam === 'DRAW' ? { increment: 1 } : { increment: 0 },
+          goalsConceded: player.goalsConceded,
         },
       });
     }

@@ -1,5 +1,5 @@
 export class PlayerProfile {
-  id?: number;
+  id?: number | string;
   name: string;
   picture?: string | null;
   goals: number;
@@ -7,6 +7,7 @@ export class PlayerProfile {
   victories: number;
   defeats: number;
   draws: number;
+  MOTMScore?: number | null;
   createdAt?: Date;
   updatedAt?: Date;
 

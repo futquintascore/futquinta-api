@@ -5,6 +5,7 @@ import { listAllPlayersProfileController } from '../useCases/list-all-players-pr
 import { listOnePlayerProfileController } from '../useCases/list-one-player-profile';
 import { updatePlayerProfileController } from '../useCases/update-player-profile';
 import { deletePlayerProfileController } from '../useCases/delete-player-profile ';
+import { incrementMOTMScoreController } from '../useCases/increment-motm-score';
 
 const router = Router();
 
@@ -34,6 +35,11 @@ router.put('/:id', (req, res) => {
 //delete
 router.delete('/:id', (req, res) => {
   return deletePlayerProfileController.handle(req, res);
+});
+
+// increment MOTM Score
+router.post('/:id/MOTM', (req, res) => {
+  return incrementMOTMScoreController.handle(req, res);
 });
 
 export default router;
