@@ -9,15 +9,9 @@ import { authMiddleware } from '../middlewares/auth';
 
 const gameRouter = Router();
 //*List
-gameRouter.get(
-  '/',
-  (req, res, next) => {
-    return authMiddleware.handle(req, res, next);
-  },
-  (req, res) => {
-    return findAllGamesController.handle(req, res);
-  }
-);
+gameRouter.get('/', (req, res) => {
+  return findAllGamesController.handle(req, res);
+});
 //*List one
 gameRouter.get('/:id', (req, res) => {
   return findOneGameController.handle(req, res);
