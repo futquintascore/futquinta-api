@@ -16,11 +16,7 @@ export class InMemoryPlayerProfileRepository implements IPlayerProfileRepository
     return findOne;
   }
   update(id: number, _reqBody: PlayerProfile): Promise<PlayerProfile> {
-    const findOne = this._items[id];
-
-    if (!findOne) {
-      throw new Error('Unable to find in database');
-    }
+    throw new Error('Method not implemented.');
   }
   delete(id: number): Promise<PlayerProfile> {
     throw new Error('Method not implemented.');
