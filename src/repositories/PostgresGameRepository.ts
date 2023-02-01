@@ -8,10 +8,16 @@ import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
   async finishGame(id: number, whiteGoals: number, greenGoals: number): Promise<Game> {
     try {
-      const finishedGame = await finishGameFunction(id, whiteGoals, greenGoals);
+      await finishGameFunction(id, whiteGoals, greenGoals);
 
+      const finishedGame = await GameModel.findUniqueOrThrow({
+        where: {
+          id,
+        },
+      });
       return finishedGame;
     } catch (err: any) {
+      console.log(err);
       throw new Error(err.message);
     }
   }

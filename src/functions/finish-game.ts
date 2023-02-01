@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { GameModel, prisma } from '../services/prismaClient';
+import { getWinnerTeam } from './set-winner-team';
 
 export async function finishGameFunction(
   gameId: number,
@@ -28,18 +29,12 @@ export async function finishGameFunction(
         greenGoals: greenGoalsScored,
       },
     });
-
     const updatedGame = await game.update({
       where: {
         id: currentGame.id,
       },
       data: {
-        winnerTeam:
-          currentGame.whiteGoals > currentGame.greenGoals
-            ? 'WHITE'
-            : currentGame.greenGoals === currentGame.whiteGoals
-            ? 'DRAW'
-            : 'GREEN',
+        winnerTeam: getWinnerTeam(currentGame.whiteGoals, currentGame.greenGoals),
         status: 'FINISHED',
       },
       include: {
@@ -52,7 +47,7 @@ export async function finishGameFunction(
     for await (const player of players) {
       await playerProfile.update({
         where: {
-          id: player.id,
+          id: player.playerId,
         },
         data: {
           goals: { increment: player.goals },
