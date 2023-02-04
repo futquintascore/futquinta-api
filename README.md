@@ -35,6 +35,7 @@
 - [x] Remove all console log from useCases
 - [x] Treat all prisma client errors with codes
 - [] Unable the user to add the same player stat on a game
+- [] Refact the icrement MOTM score
 
 
 

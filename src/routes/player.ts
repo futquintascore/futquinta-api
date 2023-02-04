@@ -7,6 +7,8 @@ import { updatePlayerProfileController } from '../useCases/update-player-profile
 import { deletePlayerProfileController } from '../useCases/delete-player-profile ';
 import { incrementMOTMScoreController } from '../useCases/increment-motm-score';
 import { authMiddleware } from '../middlewares/auth';
+import { parser } from '../services/upload';
+import { uploadAvatarController } from '../useCases/upload-avatar';
 
 const router = Router();
 
@@ -66,5 +68,9 @@ router.post(
     return incrementMOTMScoreController.handle(req, res);
   }
 );
+//upload test
+router.post('/upload/:id', parser.single('avatar'), (req, res) => {
+  return uploadAvatarController.handle(req, res);
+});
 
 export default router;

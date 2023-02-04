@@ -133,4 +133,20 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       throw new Error('Internal Server Error');
     }
   }
+  async setAvatar(id: number, imageUrl: string): Promise<PlayerProfile> {
+    try {
+      const playerProfileUpdated = await PlayersProfile.update({
+        where: {
+          id,
+        },
+        data: {
+          picture: imageUrl,
+        },
+      });
+
+      return playerProfileUpdated;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
 }
