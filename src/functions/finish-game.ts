@@ -77,7 +77,7 @@ export async function finishGameFunction(
       return { Winner, whiteGoals, greenGoals };
     },
     {
-      maxWait: 10000000,
+      timeout: 10000000,
     }
   );
 }
