@@ -8,7 +8,9 @@ export class UploadAvatarController {
 
     try {
       if (!req.file) {
-        return res.status(400).json({ message: 'You must send an avatar image' });
+        return res
+          .status(400)
+          .json({ message: 'You must send an avatar image on format jpge or png' });
       }
 
       const { name, picture } = await this.UploadAvatar.execute(+id, req.file.path);
