@@ -90,6 +90,9 @@ export class PostgresGameRepository implements IGamesRepository {
           where: {
             status: 'IN_PROGRESS',
           },
+          orderBy: {
+            createdAt: 'desc',
+          },
         });
         return gamesList;
       }
@@ -98,6 +101,9 @@ export class PostgresGameRepository implements IGamesRepository {
         const gamesList = await GameModel.findMany({
           where: {
             status: 'NOT_STARTED',
+          },
+          orderBy: {
+            createdAt: 'desc',
           },
         });
         return gamesList;
@@ -108,11 +114,18 @@ export class PostgresGameRepository implements IGamesRepository {
           where: {
             status: 'FINISHED',
           },
+          orderBy: {
+            createdAt: 'desc',
+          },
         });
         return gamesList;
       }
 
-      const gamesList = await GameModel.findMany();
+      const gamesList = await GameModel.findMany({
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
       return gamesList;
     } catch (err) {
       throw new Error('Internal Server Error');
