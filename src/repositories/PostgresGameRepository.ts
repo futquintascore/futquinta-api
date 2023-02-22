@@ -32,7 +32,9 @@ export class PostgresGameRepository implements IGamesRepository {
 
         return data;
       }
-    } catch (error) {}
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
   }
   async finishGame(id: number): Promise<Game> {
     try {
