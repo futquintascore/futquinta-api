@@ -2,11 +2,7 @@
 import { GameModel, prisma } from '../services/prismaClient';
 import { getWinnerTeam } from './set-winner-team';
 
-export async function finishGameFunction(
-  gameId: number,
-  whiteGoalsScored: number,
-  greenGoalsScored: number
-) {
+export async function finishGameFunction(gameId: number) {
   return await prisma.$transaction(
     async ({ game, playerProfile }) => {
       const currentGame = await game.findUniqueOrThrow({
@@ -26,8 +22,8 @@ export async function finishGameFunction(
           id: gameId,
         },
         data: {
-          whiteGoals: whiteGoalsScored,
-          greenGoals: greenGoalsScored,
+          whiteGoals: currentGame.whiteGoals,
+          greenGoals: currentGame.greenGoals,
         },
       });
       const updatedGame = await game.update({
