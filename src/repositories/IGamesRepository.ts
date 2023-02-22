@@ -8,4 +8,5 @@ export interface IGamesRepository {
   update(id: number, _reqBody: unknown): Promise<Game>;
   delete(id: number): Promise<Game>;
   finishGame(id: number, whiteGoals: number, greenGoals: number): Promise<Game>;
+  incrementGoals(id: number, currentTeam: 'WHITE' | 'GREEN'): Promise<Game | void>;
 }

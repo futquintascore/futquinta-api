@@ -6,9 +6,37 @@ import { finishGameFunction } from '../functions/finish-game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
-  async finishGame(id: number, whiteGoals: number, greenGoals: number): Promise<Game> {
+  async incrementGoals(id: number, currentTeam: 'WHITE' | 'GREEN'): Promise<Game | void> {
     try {
-      await finishGameFunction(id, whiteGoals, greenGoals);
+      if (currentTeam === 'WHITE') {
+        const data = await GameModel.update({
+          where: {
+            id,
+          },
+          data: {
+            whiteGoals: { increment: 1 },
+          },
+        });
+
+        return data;
+      }
+      if (currentTeam === 'GREEN') {
+        const data = await GameModel.update({
+          where: {
+            id,
+          },
+          data: {
+            greenGoals: { increment: 1 },
+          },
+        });
+
+        return data;
+      }
+    } catch (error) {}
+  }
+  async finishGame(id: number): Promise<Game> {
+    try {
+      await finishGameFunction(id);
 
       const finishedGame = await GameModel.findUniqueOrThrow({
         where: {

@@ -6,6 +6,7 @@ import { findOneGameController } from '../useCases/find-one-game';
 import { updateGameController } from '../useCases/update-game';
 import { finishGameController } from '../useCases/finish-game';
 import { authMiddleware } from '../middlewares/auth';
+import { incrementGoalsController } from '../useCases/increment-goals';
 
 const gameRouter = Router();
 //*List
@@ -59,5 +60,10 @@ gameRouter.post(
     return finishGameController.handle(req, res);
   }
 );
+
+//increment
+gameRouter.post('/:id/goals', (req, res) => {
+  return incrementGoalsController.handle(req, res);
+});
 
 export default gameRouter;
