@@ -5,12 +5,22 @@ import jwt from 'jsonwebtoken';
 import { IGetTokenDTO } from '../useCases/get-token/get-token-DTO';
 import { IUsersRepository } from './IUsersRepository';
 import { isPasswordValid } from '../functions/is-password-valid';
+import { JWTPayload } from '../entities/JWTPayload';
 
 export type TokenResponse = {
   token: string;
-  email: string;
+  user: {
+    id: number;
+    email: string;
+  };
 };
 export class PostgressUsersRepository implements IUsersRepository {
+  async getMe(token: string): Promise<JWTPayload> {
+    console.log(token);
+    const me = (await jwt.verify(token, process.env.TOKEN_SECRET!)) as JWTPayload;
+
+    return me;
+  }
   async save({ email, password }: User): Promise<User> {
     try {
       const newUser = await UserModel.create({
@@ -60,19 +70,22 @@ export class PostgressUsersRepository implements IUsersRepository {
         },
       });
 
-      const { email: userEmail, password: userPassword } = user[0];
+      const { email: userEmail, password: userPassword, id } = user[0];
 
       if (!(await isPasswordValid(userPassword, password))) {
         throw new Error('Invalid email or password');
       }
 
-      const token = jwt.sign({ email: userEmail }, process.env.TOKEN_SECRET || '', {
+      const token = jwt.sign({ id, email: userEmail }, process.env.TOKEN_SECRET || '', {
         expiresIn: process.env.TOKEN_EXPIRATION || '3d',
       });
 
       return {
         token,
-        email: userEmail,
+        user: {
+          id,
+          email: userEmail,
+        },
       };
     } catch (err: any) {
       throw new Error(err.message);

@@ -33,9 +33,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
   async list(): Promise<PlayerProfile[]> {
     try {
       const playerProfileList = await PlayersProfile.findMany({
-        orderBy: {
-          goals: 'desc',
-        },
+        orderBy: [{ goals: 'desc' }, { name: 'asc' }],
       });
 
       return playerProfileList;
