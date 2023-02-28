@@ -5,31 +5,6 @@ import { IPlayerProfileRepository } from './IPlayersProfileRepository';
 import { PlayersProfile } from '../services/prismaClient';
 import { Prisma } from '@prisma/client';
 export class PostgresPlayerProfileRepository implements IPlayerProfileRepository {
-  async incrementMOTMScore(id: number): Promise<PlayerProfile> {
-    console.log(id);
-    try {
-      const updatedMOTM = await PlayersProfile.update({
-        where: {
-          id: id,
-        },
-        data: {
-          MOTMScore: {
-            increment: +1,
-          },
-        },
-      });
-      return updatedMOTM;
-    } catch (err) {
-      console.log(err);
-      if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        console.log(err);
-        if (err.code === 'P2025') {
-          throw new Error('Unable to find player in the database');
-        }
-      }
-      throw new Error('Unknow argument passed');
-    }
-  }
   async list(): Promise<PlayerProfile[]> {
     try {
       const playerProfileList = await PlayersProfile.findMany({
@@ -50,6 +25,8 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
         include: {
           games: true,
           Stats: true,
+          MOTM: true,
+          _count: true,
         },
       });
 

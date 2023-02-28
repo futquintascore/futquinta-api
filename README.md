@@ -27,6 +27,10 @@
 - [x] include position to player profile
 - [x] add goalkeeper goals conceeded
 - [x] abstratir a função do jogador do PlayerProfile na hora de criar o PlayerStat
+- [ ] create MOTM
+- [ ] list all MOTM
+- [ ] update one MOTM
+- [ ] delete one MOTM
 
 
 

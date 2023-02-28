@@ -51,28 +51,27 @@ model PlayerProfile {
   defeats       Int
   draws         Int
   function      PlayerFunction @default(OUTFIELDPLAYER)
-  MOTMScore     Int?           @default(0) @map("MOTM_score")
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   Stats         PlayerStats[]
   games         Game[]
+  MOTM          MOTM[]
 
   @@map("players")
 }
 
 model Game {
-  id            Int             @id @default(autoincrement())
-  whiteGoals    Int             @map("white_goals")
-  greenGoals    Int             @map("green_goals")
-  whiteTeamMOTM String?         @default("") @map("white_team_motm")
-  greenTeamMOTM String?         @default("") @map("green_team_motm")
-  winnerTeam    Winner          @default(DRAW) @map("winner_team")
-  status        Status          @default(NOT_STARTED)
-  players       PlayerStats[]
-  createdAt     DateTime        @default(now()) @map("created_at")
-  updatedAt     DateTime        @updatedAt @map("updated_at")
-  Player        PlayerProfile[]
-  playerId      Int?            @unique
+  id         Int             @id @default(autoincrement())
+  whiteGoals Int             @map("white_goals")
+  greenGoals Int             @map("green_goals")
+  MOTM       MOTM[]
+  winnerTeam Winner          @default(DRAW) @map("winner_team")
+  status     Status          @default(NOT_STARTED)
+  players    PlayerStats[]
+  createdAt  DateTime        @default(now()) @map("created_at")
+  updatedAt  DateTime        @updatedAt @map("updated_at")
+  Player     PlayerProfile[]
+  playerId   Int?            @unique
 
   @@map("games")
 }
@@ -94,4 +93,12 @@ model PlayerStats {
   updatedAt     DateTime       @updatedAt @map("updated_at")
 
   @@map("stats")
+}
+
+model MOTM {
+  id              Int           @id @default(autoincrement())
+  player          PlayerProfile @relation(fields: [playerProfileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  team            Team
+  playerProfileId Int
+  Game            Game[]
 }

@@ -5,7 +5,7 @@ import { listAllPlayersProfileController } from '../useCases/list-all-players-pr
 import { listOnePlayerProfileController } from '../useCases/list-one-player-profile';
 import { updatePlayerProfileController } from '../useCases/update-player-profile';
 import { deletePlayerProfileController } from '../useCases/delete-player-profile ';
-import { incrementMOTMScoreController } from '../useCases/increment-motm-score';
+
 import { authMiddleware } from '../middlewares/auth';
 import { parser } from '../services/upload';
 import { uploadAvatarController } from '../useCases/upload-avatar';
@@ -59,15 +59,6 @@ router.delete(
 );
 
 // increment MOTM Score
-router.post(
-  '/:id/MOTM',
-  (req, res, next) => {
-    return authMiddleware.handle(req, res, next);
-  },
-  (req, res) => {
-    return incrementMOTMScoreController.handle(req, res);
-  }
-);
 //upload test
 router.post('/upload/:id', parser.single('avatar'), (req, res) => {
   return uploadAvatarController.handle(req, res);

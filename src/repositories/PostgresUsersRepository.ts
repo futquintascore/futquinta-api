@@ -16,7 +16,6 @@ export type TokenResponse = {
 };
 export class PostgressUsersRepository implements IUsersRepository {
   async getMe(token: string): Promise<JWTPayload> {
-    console.log(token);
     const me = (await jwt.verify(token, process.env.TOKEN_SECRET!)) as JWTPayload;
 
     return me;

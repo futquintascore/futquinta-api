@@ -5,6 +5,7 @@ import gameRouter from './routes/game';
 import statRoute from './routes/stats';
 import cors from 'cors';
 import userRoute from './routes/user';
+import MOTMRoute from './routes/motm.routes';
 
 config();
 
@@ -27,6 +28,7 @@ class App {
     this.app.use('/v1/players', playersRoute);
     this.app.use('/v1/stats', statRoute);
     this.app.use('/v1/users', userRoute);
+    this.app.use('/v1/motm', MOTMRoute);
   }
 }
 export default new App().app;

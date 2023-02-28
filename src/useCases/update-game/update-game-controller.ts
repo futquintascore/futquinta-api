@@ -6,9 +6,9 @@ export class UpdateGameController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const { id: gameId } = await this.UpdateGame.execute(+id, req.body);
+      const game = await this.UpdateGame.execute(+id, req.body);
 
-      return res.status(201).json(`O jogo ${gameId} foi atualizado com sucesso`);
+      return res.status(201).json(game);
     } catch (err: any) {
       res.status(400).json({ message: err.message });
     }

@@ -11,7 +11,6 @@ export class FindUserByTokenController {
         const [, token] = authorization.split(' ');
 
         const me = await this.FindUserByToken.execute(token);
-        console.log(me);
 
         return res.status(201).json(me);
       }
