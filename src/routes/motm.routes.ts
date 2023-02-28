@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { MOTMModel } from '../services/prismaClient';
+
 import { createMOTMController } from '../useCases/create-motm';
+import { deleteMOTMController } from '../useCases/delete-motm';
 
 const router = Router();
 router.get('/', (req, res) => {
@@ -18,13 +19,8 @@ router.put('/', (req, res) => {
 
 // ! Delete
 
-router.delete('/', async (req, res) => {
-  const data = await MOTMModel.delete({
-    where: {
-      id: 8,
-    },
-  });
-  res.json(data);
+router.delete('/:id', async (req, res) => {
+  return deleteMOTMController.handle(req, res);
 });
 
 export default router;
