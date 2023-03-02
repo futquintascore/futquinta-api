@@ -6,5 +6,8 @@ export interface ICreatePlayerProfileDTO {
   victories: number;
   defeats: number;
   draws: number;
-  MOTMScore: number;
+  greenShirtpicture: string | null;
+  whiteShirtpicture: string | null;
+  shirtNumber: number | null;
+  currentPicture: string | null;
 }

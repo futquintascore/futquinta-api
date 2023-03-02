@@ -9,7 +9,7 @@ export class DeleteMOTMController {
     try {
       const deletedMOTM = await this.DeleteMOTM.execute(+id);
 
-      res.status(201).json({
+      res.status(200).json({
         message: `MOTM with id ${deletedMOTM.id} deleted with sucess `,
         data: { ...deletedMOTM },
       });

@@ -1,3 +1,4 @@
+import { ICreatePlayerProfileDTO } from './create-player-profile-dto';
 import { Request, Response } from 'express';
 import { CreatePlayerProfile } from './create-player-profile-usecase';
 export class CreatePlayerProfileController {
@@ -5,14 +6,16 @@ export class CreatePlayerProfileController {
   async handle(req: Request, res: Response) {
     const {
       name,
-      picture = null,
       goals = 0,
       assists = 0,
       victories = 0,
       defeats = 0,
       draws = 0,
-      MOTMScore = 0,
-    } = req.body;
+      shirtNumber = null,
+      greenShirtpicture = null,
+      whiteShirtpicture = null,
+      currentPicture = null,
+    } = req.body as ICreatePlayerProfileDTO;
     try {
       const newPlayerProfile = await this.CreatePlayerProfileUseCase.execute({
         name,
@@ -21,8 +24,10 @@ export class CreatePlayerProfileController {
         victories,
         defeats,
         draws,
-        picture,
-        MOTMScore,
+        whiteShirtpicture,
+        greenShirtpicture,
+        currentPicture,
+        shirtNumber,
       });
 
       res.status(201).json(newPlayerProfile);

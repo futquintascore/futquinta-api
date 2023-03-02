@@ -88,7 +88,11 @@ export class PostgresGameRepository implements IGamesRepository {
               goals: 'desc',
             },
           },
-          MOTM: true,
+          MOTM: {
+            include: {
+              player: true,
+            },
+          },
         },
       });
       return singleGame;

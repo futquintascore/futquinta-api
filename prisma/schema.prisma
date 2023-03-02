@@ -41,21 +41,24 @@ model User {
 }
 
 model PlayerProfile {
-  id            Int            @id @default(autoincrement())
-  name          String         @unique
-  picture       String?
-  goals         Int
-  assists       Int
-  goalsConceded Int?           @default(0)
-  victories     Int
-  defeats       Int
-  draws         Int
-  function      PlayerFunction @default(OUTFIELDPLAYER)
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
-  Stats         PlayerStats[]
-  games         Game[]
-  MOTM          MOTM[]
+  id                Int            @id @default(autoincrement())
+  name              String         @unique
+  greenShirtpicture String?
+  whiteShirtpicture String?
+  currentPicture    String?
+  shirtNumber       Int?
+  goals             Int
+  assists           Int
+  goalsConceded     Int?           @default(0)
+  victories         Int
+  defeats           Int
+  draws             Int
+  function          PlayerFunction @default(OUTFIELDPLAYER)
+  createdAt         DateTime       @default(now()) @map("created_at")
+  updatedAt         DateTime       @updatedAt @map("updated_at")
+  Stats             PlayerStats[]
+  games             Game[]
+  MOTM              MOTM[]
 
   @@map("players")
 }
