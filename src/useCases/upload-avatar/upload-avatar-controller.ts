@@ -5,6 +5,7 @@ export class UploadAvatarController {
 
   async handle(req: Request, res: Response) {
     const { id } = req.params;
+    const { shirtColor } = req.body;
 
     try {
       if (!req.file) {
@@ -12,15 +13,17 @@ export class UploadAvatarController {
           .status(400)
           .json({ message: 'You must send an avatar image on format jpge or png' });
       }
-      console.log(req.body);
-      return;
 
-      // const { name, picture } = await this.UploadAvatar.execute(+id, req.file.path);
+      const { name, currentPicture } = await this.UploadAvatar.execute(
+        +id,
+        req.file.path,
+        shirtColor
+      );
 
-      // res.status(201).json({
-      //   message: `Avatar of player ${name} updated with success`,
-      //   image_url: picture,
-      // });
+      res.status(201).json({
+        message: `Avatar of player ${name} updated with success`,
+        image_url: currentPicture,
+      });
     } catch (err: any) {
       res.status(400).json({ message: err.message });
     }

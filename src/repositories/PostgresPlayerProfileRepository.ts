@@ -114,18 +114,39 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       throw new Error('Internal Server Error');
     }
   }
-  async setAvatar(id: number, imageUrl: string): Promise<PlayerProfile> {
+  async setAvatar(
+    id: number,
+    imageUrl: string,
+    shirtColor: 'GREEN' | 'WHITE'
+  ): Promise<PlayerProfile> {
     try {
-      const playerProfileUpdated = await PlayersProfile.update({
-        where: {
-          id,
-        },
-        data: {
-          whiteShirtpicture: imageUrl,
-        },
-      });
+      if (shirtColor === 'GREEN') {
+        const playerProfileUpdated = await PlayersProfile.update({
+          where: {
+            id,
+          },
+          data: {
+            greenShirtpicture: imageUrl,
+            currentPicture: 'GREEN',
+          },
+        });
 
-      return playerProfileUpdated;
+        return playerProfileUpdated;
+      }
+      if (shirtColor === 'WHITE') {
+        const playerProfileUpdated = await PlayersProfile.update({
+          where: {
+            id,
+          },
+          data: {
+            whiteShirtpicture: imageUrl,
+            currentPicture: 'WHITE',
+          },
+        });
+
+        return playerProfileUpdated;
+      }
+      throw new Error('must inform color shirt');
     } catch (err: any) {
       throw new Error(err.message);
     }

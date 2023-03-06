@@ -2,7 +2,7 @@ import { IPlayerProfileRepository } from './../../repositories/IPlayersProfileRe
 export class UploadAvatarUseCase {
   constructor(private PlayerProfileRepository: IPlayerProfileRepository) {}
 
-  async execute(id: number, imageUrl: string) {
-    return this.PlayerProfileRepository.setAvatar(id, imageUrl);
+  async execute(id: number, imageUrl: string, shitColor: 'GREEN' | 'WHITE') {
+    return this.PlayerProfileRepository.setAvatar(id, imageUrl, shitColor);
   }
 }
