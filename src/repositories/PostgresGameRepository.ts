@@ -87,6 +87,9 @@ export class PostgresGameRepository implements IGamesRepository {
             orderBy: {
               goals: 'desc',
             },
+            include: {
+              player: true,
+            },
           },
           MOTM: {
             include: {
