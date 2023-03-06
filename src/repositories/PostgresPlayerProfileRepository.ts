@@ -27,8 +27,10 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
           Stats: {
             include: {
               Game: true,
+              player: true,
             },
           },
+
           MOTM: true,
           _count: true,
         },
