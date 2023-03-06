@@ -1,12 +1,11 @@
 export class PlayerProfile {
   id?: number | string;
   name: string;
-  pictures?: {
-    greenShirt?: string;
-    whiteShirt?: string;
-  };
-  shirtNumber: number | null;
+  greenShirtpicture?: string | null;
+  whiteShirtpicture?: string | null;
   currentPicture?: string | null;
+  shirtNumber: number | null;
+  slug: string;
   goals: number;
   assists: number;
   victories: number;
@@ -23,6 +22,7 @@ export class PlayerProfile {
     this.victories = props.victories;
     this.defeats = props.defeats;
     this.draws = props.draws;
+    this.slug = props.slug;
     this.shirtNumber = props.shirtNumber;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;

@@ -4,17 +4,28 @@ const slugify = (str:string) =>
   str
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[^\w\s-]/g, '.')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace('.','-')
+    .replace(' ','-')
+    
+    
 async function main() {
 return prisma.$transaction(async (ctx)=>{
   const players = await ctx.playerProfile.findMany()
 
-  players.map(player =>{
-    console.log(slugify(player.name))
-  })
+  for await(const player of players){
+    await ctx.playerProfile.update({
+      where:{
+        id:player.id
+      },
+      data:{
+        slug:slugify(player.name)
+      }
+    })
+  }
+},{
+  timeout:400000
 })
 }
 main()

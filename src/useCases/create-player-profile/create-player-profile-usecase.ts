@@ -12,6 +12,7 @@ export class CreatePlayerProfile {
     draws,
     goals,
     shirtNumber,
+    slug,
   }: ICreatePlayerProfileDTO) {
     const playerProfile = new PlayerProfile({
       name,
@@ -21,6 +22,7 @@ export class CreatePlayerProfile {
       draws,
       goals,
       shirtNumber,
+      slug,
     });
 
     return await this.PlayerProfileRepository.save(playerProfile);

@@ -43,7 +43,7 @@ model User {
 model PlayerProfile {
   id                Int            @id @default(autoincrement())
   name              String         @unique
-  slug              String?        @unique
+  slug              String         @unique
   greenShirtpicture String?
   whiteShirtpicture String?
   currentPicture    String?

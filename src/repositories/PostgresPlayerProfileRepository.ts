@@ -87,6 +87,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
     defeats,
     draws,
     shirtNumber,
+    slug,
   }: PlayerProfile): Promise<PlayerProfile> {
     try {
       const newPlayerProfile = await PlayersProfile.create({
@@ -98,6 +99,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
           defeats,
           draws,
           shirtNumber,
+          slug,
         },
       });
 
