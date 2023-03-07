@@ -9,6 +9,7 @@ import { deletePlayerProfileController } from '../useCases/delete-player-profile
 import { authMiddleware } from '../middlewares/auth';
 import { parser } from '../services/upload';
 import { uploadAvatarController } from '../useCases/upload-avatar';
+import { PlayersProfile } from '../services/prismaClient';
 
 const router = Router();
 
@@ -21,6 +22,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   return listOnePlayerProfileController.handle(req, res);
 });
+
 //Create
 router.post(
   '/',
