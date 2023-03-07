@@ -11,6 +11,17 @@ export class ListOnePlayerProfileController {
           where: {
             slug: id,
           },
+          include: {
+            games: true,
+            Stats: {
+              include: {
+                Game: true,
+              },
+            },
+
+            MOTM: true,
+            _count: true,
+          },
         });
         return res.json(player);
       }
