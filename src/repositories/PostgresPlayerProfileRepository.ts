@@ -9,6 +9,13 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
     try {
       const playerProfileList = await PlayersProfile.findMany({
         orderBy: [{ goals: 'desc' }, { name: 'asc' }],
+        include: {
+          Stats: {
+            include: {
+              Game: true,
+            },
+          },
+        },
       });
 
       return playerProfileList;
