@@ -15,6 +15,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
               Game: true,
             },
           },
+          MOTM: true,
         },
       });
 
