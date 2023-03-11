@@ -1,8 +1,8 @@
+import { PrismaPlayerStatsRepository } from './../../repositories/prisma/PrismaPlayerStatsRepository';
 import { UpdatePlayerStatsController } from './update-player-stats-controller';
-import { PostgresPlayerStatsRepository } from '../../repositories/PostgresPlayerStatsRepository';
 import { UpdatePlayerStatsUseCase } from './update-player-stats-usecase';
 
-const postgressPlayerStatsRepository = new PostgresPlayerStatsRepository();
+const postgressPlayerStatsRepository = new PrismaPlayerStatsRepository();
 
 const updatePlayerStatsUseCase = new UpdatePlayerStatsUseCase(
   postgressPlayerStatsRepository

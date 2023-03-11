@@ -1,24 +1,87 @@
-import { PlayerStats } from './../entities/PlayerStats';
-import { IPlayerStatsRepository } from './IPlayerStatsRepository';
-import { prisma, GameModel, PlayersStats } from '../services/prismaClient';
+import { PlayerStats } from './../../entities/PlayerStats';
+import { IPlayerStatsRepository } from './../IPlayerStatsRepository';
+import { prisma } from '../../services/prismaClient';
 type PlayerData = {
   id: number;
   name: string;
   currentTeam: 'GREEN' | 'WHITE';
   function: 'GOALKEEPER' | 'OUTFIELDPLAYER';
 };
-import { Game } from '../entities/Game';
+import { Game } from '../../entities/Game';
 import { Prisma } from '@prisma/client';
-import { updatePlayerStats } from '../functions/update-player-stat';
-export class PostgresPlayerStatsRepository implements IPlayerStatsRepository {
+import { updatePlayerStats } from '../../functions/update-player-stat';
+export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
   async delete(statId: number): Promise<PlayerStats> {
     try {
-      const deletedPlayer = await PlayersStats.delete({
-        where: {
-          id: statId,
+      const data = await prisma.$transaction(
+        async (ctx) => {
+          const {
+            id,
+            playerId,
+            goals,
+            Game,
+            currentTeam,
+            function: playerFunction,
+          } = await ctx.playerStats.findUniqueOrThrow({
+            where: {
+              id: statId,
+            },
+            include: {
+              Game: true,
+            },
+          });
+          if (Game?.winnerTeam === currentTeam) {
+            const updatedPlayerProfile = await ctx.playerProfile.update({
+              where: {
+                id: playerId,
+              },
+              data: {
+                goals: { decrement: goals },
+                victories: { decrement: 1 },
+              },
+            });
+            return await ctx.playerStats.delete({
+              where: {
+                id,
+              },
+            });
+          }
+          if (Game?.winnerTeam !== currentTeam && Game?.winnerTeam !== 'DRAW') {
+            const updatedPlayerProfile = await ctx.playerProfile.update({
+              where: {
+                id: playerId,
+              },
+              data: {
+                goals: { decrement: goals },
+                defeats: { decrement: 1 },
+              },
+            });
+            return await ctx.playerStats.delete({
+              where: {
+                id,
+              },
+            });
+          }
+          const updatedPlayerProfile = await ctx.playerProfile.update({
+            where: {
+              id: playerId,
+            },
+            data: {
+              goals: { decrement: goals },
+              draws: { decrement: 1 },
+            },
+          });
+          return await ctx.playerStats.delete({
+            where: {
+              id,
+            },
+          });
         },
-      });
-      return deletedPlayer;
+        {
+          timeout: 10000,
+        }
+      );
+      return data;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         throw new Error('Unable to find game in the database');

@@ -6,48 +6,12 @@ import { finishGameFunction } from '../functions/finish-game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
-  async incrementGoals(id: number, currentTeam: 'WHITE' | 'GREEN'): Promise<Game | void> {
+  async finishGame(id: number, winnerTeam: 'GREEN' | 'WHITE' | 'DRAW'): Promise<Game> {
     try {
-      if (currentTeam === 'WHITE') {
-        const data = await GameModel.update({
-          where: {
-            id,
-          },
-          data: {
-            whiteGoals: { increment: 1 },
-          },
-        });
+      const finishedGame = await finishGameFunction(id, winnerTeam);
 
-        return data;
-      }
-      if (currentTeam === 'GREEN') {
-        const data = await GameModel.update({
-          where: {
-            id,
-          },
-          data: {
-            greenGoals: { increment: 1 },
-          },
-        });
-
-        return data;
-      }
-    } catch (err: any) {
-      throw new Error(err.message);
-    }
-  }
-  async finishGame(id: number): Promise<Game> {
-    try {
-      await finishGameFunction(id);
-
-      const finishedGame = await GameModel.findUniqueOrThrow({
-        where: {
-          id,
-        },
-      });
       return finishedGame;
     } catch (err: any) {
-      console.log(err);
       throw new Error(err.message);
     }
   }
@@ -81,23 +45,25 @@ export class PostgresGameRepository implements IGamesRepository {
   async listById(id: number): Promise<Game> {
     try {
       const singleGame = await GameModel.findUniqueOrThrow({
-        where: { id },
+        where: {
+          id,
+        },
         include: {
-          players: {
-            orderBy: {
-              goals: 'desc',
-            },
-            include: {
-              player: true,
-            },
-          },
           MOTM: {
             include: {
               player: true,
             },
           },
+          _count: true,
+          players: {
+            include: {
+              Game: true,
+              player: true,
+            },
+          },
         },
       });
+
       return singleGame;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {

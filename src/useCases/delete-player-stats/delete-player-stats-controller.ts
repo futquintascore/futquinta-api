@@ -6,8 +6,8 @@ export class DeletePlayerStatController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const { name, gameId } = await this.DeletePlayerStats.execute(+id);
-      res.status(200).json(`Deletes stat of ${name} in game ${gameId}`);
+      const data = await this.DeletePlayerStats.execute(+id);
+      res.status(200).json(data);
     } catch (err: any) {
       res.status(400).json({ message: err.message });
     }

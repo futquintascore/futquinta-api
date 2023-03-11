@@ -1,4 +1,3 @@
-import { PlayerStats } from '@prisma/client';
 import { Game } from '../entities/Game';
 
 export interface IGamesRepository {
@@ -7,6 +6,5 @@ export interface IGamesRepository {
   listById(id: number): Promise<Game>;
   update(id: number, _reqBody: unknown): Promise<Game>;
   delete(id: number): Promise<Game>;
-  finishGame(id: number, whiteGoals: number, greenGoals: number): Promise<Game>;
-  incrementGoals(id: number, currentTeam: 'WHITE' | 'GREEN'): Promise<Game | void>;
+  finishGame(id: number, winnerTeam: 'GREEN' | 'WHITE' | 'DRAW'): Promise<Game>;
 }

@@ -32,7 +32,6 @@ class AuthMiddleware {
 
       return next();
     } catch (e) {
-      console.log(e);
       return res.status(401).json({
         errors: ['token expirado ou invalido'],
       });

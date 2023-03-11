@@ -11,22 +11,40 @@ const slugify = (str:string) =>
     
     
 async function main() {
-return prisma.$transaction(async (ctx)=>{
-  const players = await ctx.playerProfile.findMany()
+  const games = await prisma.game.findMany({
+    include:{
+      players:{
+        include:{
+          player:true
+        }
+      }
+    }
+  })
 
-  for await(const player of players){
-    await ctx.playerProfile.update({
-      where:{
-        id:player.id
-      },
-      data:{
-        slug:slugify(player.name)
+
+  for await (const game of games){
+    const winnerTeam = game.winnerTeam
+    const playersStats = game.players
+
+    playersStats.map(async (stat)=>{
+      if(stat.currentTeam === 'GREEN'){
+        await prisma.playerStats.update({
+          where:{
+            id:stat.id
+          },
+          data:{
+            
+          }
+        })
+
+      }
+      if(stat.currentTeam === 'WHITE'){
+        
       }
     })
   }
-},{
-  timeout:400000
-})
+  
+
 }
 main()
   .then(async () => {

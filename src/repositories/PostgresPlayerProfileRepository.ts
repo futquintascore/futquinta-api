@@ -27,6 +27,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
           Stats: {
             include: {
               Game: true,
+              player: true,
             },
           },
 
@@ -37,6 +38,7 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
 
       return listPlayerById;
     } catch (err) {
+      console.log(err);
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
           throw new Error('Unable to find player in the database');

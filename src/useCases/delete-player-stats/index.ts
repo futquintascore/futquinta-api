@@ -1,8 +1,8 @@
 import { DeletePlayerStatController } from './delete-player-stats-controller';
 import { DeletePlayerStatsUseCase } from './delete-player-stats-usecase';
-import { PostgresPlayerStatsRepository } from '../../repositories/PostgresPlayerStatsRepository';
+import { PrismaPlayerStatsRepository } from '../../repositories/prisma/PrismaPlayerStatsRepository';
 
-const postgressPlayerStatsRepository = new PostgresPlayerStatsRepository();
+const postgressPlayerStatsRepository = new PrismaPlayerStatsRepository();
 
 const deletePlayerStatUseCase = new DeletePlayerStatsUseCase(
   postgressPlayerStatsRepository
