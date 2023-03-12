@@ -1,3 +1,4 @@
+import { IAddPlayerToGameDTO } from './../../useCases/add-player-to-game/add-player-to-game-dto';
 import { PlayerStats } from './../../entities/PlayerStats';
 import { IPlayerStatsRepository } from './../IPlayerStatsRepository';
 import { prisma } from '../../services/prismaClient';
@@ -11,27 +12,48 @@ import { Game } from '../../entities/Game';
 import { Prisma } from '@prisma/client';
 import { updatePlayerStats } from '../../functions/update-player-stat';
 export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
+  async addToGame({
+    name,
+    currentTeam,
+    gameId,
+    playerId,
+    function: playerFunction,
+  }: IAddPlayerToGameDTO): Promise<PlayerStats> {
+    try {
+      const newPlayer = await prisma.playerStats.create({
+        data: {
+          name,
+          playerId,
+          gameId,
+          currentTeam,
+          function: playerFunction,
+          goals: 0,
+          assists: 0,
+          substituition: 0,
+          goalsConceded: 0,
+        },
+      });
+
+      return newPlayer;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
   async delete(statId: number): Promise<PlayerStats> {
     try {
       const data = await prisma.$transaction(
         async (ctx) => {
-          const {
-            id,
-            playerId,
-            goals,
-            Game,
-            currentTeam,
-            function: playerFunction,
-          } = await ctx.playerStats.findUniqueOrThrow({
-            where: {
-              id: statId,
-            },
-            include: {
-              Game: true,
-            },
-          });
+          const { id, playerId, goals, Game, currentTeam } =
+            await ctx.playerStats.findUniqueOrThrow({
+              where: {
+                id: statId,
+              },
+              include: {
+                Game: true,
+              },
+            });
           if (Game?.winnerTeam === currentTeam) {
-            const updatedPlayerProfile = await ctx.playerProfile.update({
+            await ctx.playerProfile.update({
               where: {
                 id: playerId,
               },
@@ -47,7 +69,7 @@ export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
             });
           }
           if (Game?.winnerTeam !== currentTeam && Game?.winnerTeam !== 'DRAW') {
-            const updatedPlayerProfile = await ctx.playerProfile.update({
+            await ctx.playerProfile.update({
               where: {
                 id: playerId,
               },
@@ -62,7 +84,7 @@ export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
               },
             });
           }
-          const updatedPlayerProfile = await ctx.playerProfile.update({
+          await ctx.playerProfile.update({
             where: {
               id: playerId,
             },

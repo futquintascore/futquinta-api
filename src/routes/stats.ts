@@ -5,6 +5,8 @@ import { createPlayerStatsController } from '../useCases/create-player-stats';
 import { deletePlayerStatController } from '../useCases/delete-player-stats';
 import { authMiddleware } from '../middlewares/auth';
 
+import { addPlayerToGameController } from '../useCases/add-player-to-game';
+
 const statRoute = Router();
 
 statRoute.post(
@@ -35,5 +37,8 @@ statRoute.delete(
     return deletePlayerStatController.handle(req, res);
   }
 );
+statRoute.post('/:gameId/:playerId', async (req, res) => {
+  return addPlayerToGameController.handle(req, res);
+});
 
 export default statRoute;
