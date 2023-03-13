@@ -7,4 +7,5 @@ export interface IGamesRepository {
   update(id: number, _reqBody: unknown): Promise<Game>;
   delete(id: number): Promise<Game>;
   finishGame(id: number, winnerTeam: 'GREEN' | 'WHITE' | 'DRAW'): Promise<Game>;
+  setGamePicture(id: number, imageUrl: string): Promise<Game>;
 }

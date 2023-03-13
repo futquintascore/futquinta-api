@@ -6,6 +6,22 @@ import { finishGameFunction } from '../functions/finish-game';
 import { GameModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
+  async setGamePicture(id: number, imageUrl: string): Promise<Game> {
+    try {
+      const newPicture = await GameModel.update({
+        where: {
+          id,
+        },
+        data: {
+          gamePicture: imageUrl,
+        },
+      });
+
+      return newPicture;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
   async finishGame(id: number, winnerTeam: 'GREEN' | 'WHITE' | 'DRAW'): Promise<Game> {
     try {
       const finishedGame = await finishGameFunction(id, winnerTeam);

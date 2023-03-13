@@ -71,18 +71,19 @@ model PlayerProfile {
 }
 
 model Game {
-  id         Int             @id @default(autoincrement())
-  whiteGoals Int             @map("white_goals")
-  greenGoals Int             @map("green_goals")
-  MOTM       MOTM[]
-  winnerTeam Winner          @default(DRAW) @map("winner_team")
-  status     Status          @default(NOT_STARTED)
-  players    PlayerStats[]
-  createdAt  DateTime        @default(now()) @map("created_at")
-  updatedAt  DateTime        @updatedAt @map("updated_at")
-  Player     PlayerProfile[]
-  playerId   Int?            @unique
-  slug       String?         @unique
+  id          Int             @id @default(autoincrement())
+  whiteGoals  Int             @map("white_goals")
+  greenGoals  Int             @map("green_goals")
+  MOTM        MOTM[]
+  winnerTeam  Winner          @default(DRAW) @map("winner_team")
+  status      Status          @default(NOT_STARTED)
+  players     PlayerStats[]
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  Player      PlayerProfile[]
+  playerId    Int?            @unique
+  slug        String?         @unique
+  gamePicture String?
 
   @@map("games")
 }

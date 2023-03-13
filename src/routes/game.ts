@@ -6,6 +6,8 @@ import { findOneGameController } from '../useCases/find-one-game';
 import { updateGameController } from '../useCases/update-game';
 import { finishGameController } from '../useCases/finish-game';
 import { authMiddleware } from '../middlewares/auth';
+import { uploadGamePictureController } from '../useCases/upload-game-picture';
+import { parser } from '../services/upload';
 
 const gameRouter = Router();
 //*List
@@ -59,5 +61,9 @@ gameRouter.post(
     return finishGameController.handle(req, res);
   }
 );
+
+gameRouter.put(`/picture/:id`, parser.single('game_picture'), (req, res) => {
+  return uploadGamePictureController.handle(req, res);
+});
 
 export default gameRouter;
