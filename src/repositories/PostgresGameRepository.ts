@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import { Game } from '../entities/Game';
 import { finishGameFunction } from '../functions/finish-game';
 
-import { GameModel } from '../services/prismaClient';
+import { GameModel, MOTMModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
 export class PostgresGameRepository implements IGamesRepository {
   async setGamePicture(id: number, imageUrl: string): Promise<Game> {
@@ -35,7 +35,17 @@ export class PostgresGameRepository implements IGamesRepository {
     try {
       const deletedGame = await GameModel.delete({
         where: { id },
+        include: {
+          MOTM: true,
+        },
       });
+      for await (const manOfTheMatch of deletedGame.MOTM) {
+        await MOTMModel.delete({
+          where: {
+            id: manOfTheMatch.id,
+          },
+        });
+      }
       return deletedGame;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
