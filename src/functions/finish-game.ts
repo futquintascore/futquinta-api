@@ -1,3 +1,4 @@
+import { Game } from './../entities/Game';
 /* eslint-disable indent */
 import { prisma } from '../services/prismaClient';
 
@@ -31,25 +32,24 @@ export async function finishGameFunction(
           players: true,
         },
       });
-      // for await (const player of players) {
-      //   await playerProfile.update({
-      //     where: {
-      //       id: player.playerId,
-      //     },
-      //     data: {
-      //       goals: { increment: player.goals },
-      //       assists: { increment: player.assists },
-      //       victories:
-      //         winnerTeam === player.currentTeam ? { increment: 1 } : { increment: 0 },
-      //       defeats:
-      //         winnerTeam !== player.currentTeam && winnerTeam !== 'DRAW'
-      //           ? { increment: 1 }
-      //           : { increment: 0 },
-      //       draws: winnerTeam === 'DRAW' ? { increment: 1 } : { increment: 0 },
-      //     },
-      //   });
-      // }
       const { players } = updatedGame;
+      for await (const player of players) {
+        await playerProfile.update({
+          where: {
+            id: player.playerId,
+          },
+          data: {
+            victories:
+              winnerTeam === player.currentTeam ? { increment: 1 } : { increment: 0 },
+            defeats:
+              winnerTeam !== player.currentTeam && winnerTeam !== 'DRAW'
+                ? { increment: 1 }
+                : { increment: 0 },
+            draws: winnerTeam === 'DRAW' ? { increment: 1 } : { increment: 0 },
+          },
+        });
+      }
+
       const goalkeepers = players.filter((player) => player.function === 'GOALKEEPER');
 
       for await (const gk of goalkeepers) {

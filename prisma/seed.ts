@@ -11,37 +11,32 @@ const slugify = (str:string) =>
     
     
 async function main() {
-  const games = await prisma.game.findMany({
+  const tomorrowGame = await prisma.game.findUniqueOrThrow({
+    where:{
+      id:21
+    },
     include:{
-      players:{
-        include:{
-          player:true
-        }
-      }
+      players:true
     }
   })
 
+  const {players,winnerTeam} = tomorrowGame
 
-  for await (const game of games){
-    const winnerTeam = game.winnerTeam
-    const playersStats = game.players
-
-    playersStats.map(async (stat)=>{
-      if(stat.currentTeam === 'GREEN'){
-        await prisma.playerStats.update({
-          where:{
-            id:stat.id
-          },
-          data:{
-            
-          }
-        })
-
-      }
-      if(stat.currentTeam === 'WHITE'){
-        
-      }
-    })
+  for await (const player of players) {
+    await prisma.playerProfile.update({
+      where: {
+        id: player.playerId,
+      },
+      data: {
+        victories:
+          winnerTeam === player.currentTeam ? { increment: 1 } : { increment: 0 },
+        defeats:
+          winnerTeam !== player.currentTeam && winnerTeam !== 'DRAW'
+            ? { increment: 1 }
+            : { increment: 0 },
+        draws: winnerTeam === 'DRAW' ? { increment: 1 } : { increment: 0 },
+      },
+    });
   }
   
 
