@@ -1,7 +1,25 @@
 import { MOTM } from '../../entities/MOTM';
-import { MOTMModel } from '../../services/prismaClient';
+import { GameModel, MOTMModel } from '../../services/prismaClient';
 import { IMOTMRespository } from './../IMOTMRepository';
 export class PrismaMOTMRepository implements IMOTMRespository {
+  async alreadyHasTwo(gameId: number): Promise<boolean> {
+    try {
+      const currentGame = await GameModel.findUniqueOrThrow({
+        where: {
+          id: gameId,
+        },
+        include: {
+          MOTM: true,
+        },
+      });
+
+      if (currentGame.MOTM.length === 2) return true;
+
+      return false;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
   async delete(id: number): Promise<MOTM> {
     try {
       const deletedMOTM = await MOTMModel.delete({

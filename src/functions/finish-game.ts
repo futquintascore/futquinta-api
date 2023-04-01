@@ -1,4 +1,3 @@
-import { Game } from './../entities/Game';
 /* eslint-disable indent */
 import { prisma } from '../services/prismaClient';
 
@@ -6,6 +5,8 @@ export async function finishGameFunction(
   gameId: number,
   winnerTeam: 'GREEN' | 'WHITE' | 'DRAW'
 ) {
+  console.log(winnerTeam);
+
   return await prisma.$transaction(
     async ({ game, playerProfile }) => {
       const { whiteGoals, greenGoals, status } = await game.findUniqueOrThrow({

@@ -1,45 +1,30 @@
+import { PlayerProfile } from './../src/entities/PlayerProfile';
 import { PrismaClient } from '@prisma/client'
+
 const prisma = new PrismaClient()
-const slugify = (str:string) =>
-  str
-    .toLowerCase()
-    .trim()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace('.','-')
-    .replace(' ','-')
-    
-    
+
 async function main() {
-  const tomorrowGame = await prisma.game.findUniqueOrThrow({
+  const {players} = await prisma.game.findUniqueOrThrow({
     where:{
-      id:21
+      id:22
     },
     include:{
       players:true
     }
   })
 
-  const {players,winnerTeam} = tomorrowGame
+  for await(const jogador of players){
 
-  for await (const player of players) {
-    await prisma.playerProfile.update({
-      where: {
-        id: player.playerId,
-      },
-      data: {
-        victories:
-          winnerTeam === player.currentTeam ? { increment: 1 } : { increment: 0 },
-        defeats:
-          winnerTeam !== player.currentTeam && winnerTeam !== 'DRAW'
-            ? { increment: 1 }
-            : { increment: 0 },
-        draws: winnerTeam === 'DRAW' ? { increment: 1 } : { increment: 0 },
-      },
-    });
+    if(jogador.currentTeam === 'GREEN'){
+      const pl = await prisma.playerProfile.findUniqueOrThrow({
+        where:{
+          id:jogador.playerId
+        }
+      })
+      console.log(pl)
+    }
+    return
   }
-  
-
 }
 main()
   .then(async () => {
