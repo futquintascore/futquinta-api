@@ -1,0 +1,47 @@
+import { PlayerProfile } from '@prisma/client';
+import { getPlayerStats } from './getPlayerStats';
+
+export function getGeneralRanking(players: PlayerProfile[]) {
+  const playersGeneralRanking = players
+    .map((player) => {
+      const stats = getPlayerStats(player);
+      const { id, name, slug } = player;
+      return {
+        id,
+        name,
+        slug,
+        ...stats,
+      };
+    })
+    .sort((a, b) => (a.points > b.points ? -1 : 1))
+    .sort((a, b) => {
+      if (a.points === b.points && a.gamesRecord > b.gamesRecord) return -1;
+      return 1;
+    })
+    .sort((a, b) => {
+      if (
+        a.points === b.points &&
+        a.gamesRecord === b.gamesRecord &&
+        a.totalGames > b.totalGames
+      )
+        return -1;
+      return 1;
+    })
+    .sort((a, b) => {
+      if (
+        a.points === b.points &&
+        a.gamesRecord === b.gamesRecord &&
+        a.totalGames === b.totalGames &&
+        a.name < b.name
+      )
+        return -1;
+      return 1;
+    });
+
+  return playersGeneralRanking.map((player, index) => {
+    return {
+      ...player,
+      position: `${index + 1}°`,
+    };
+  });
+}
