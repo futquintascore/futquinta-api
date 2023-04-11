@@ -1,3 +1,4 @@
+import { PlayerProfileRole } from '@prisma/client';
 export class PlayerProfile {
   id?: number | string;
   name: string;
@@ -11,6 +12,7 @@ export class PlayerProfile {
   victories: number;
   defeats: number;
   draws: number;
+  role: PlayerProfileRole;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -24,6 +26,7 @@ export class PlayerProfile {
     this.draws = props.draws;
     this.slug = props.slug;
     this.shirtNumber = props.shirtNumber;
+    this.role = props.role;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
   }

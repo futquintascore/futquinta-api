@@ -10,4 +10,5 @@ export interface ICreatePlayerProfileDTO {
   whiteShirtpicture: string | null;
   shirtNumber: number | null;
   currentPicture: string | null;
+  role: 'PERMANENT' | 'GUEST';
 }

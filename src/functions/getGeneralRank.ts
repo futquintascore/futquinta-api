@@ -1,7 +1,7 @@
-import { PlayerProfile } from '@prisma/client';
 import { getPlayerStats } from './getPlayerStats';
+import { PlayerProfileWithStats } from './../../index.d';
 
-export function getGeneralRanking(players: PlayerProfile[]) {
+export function getGeneralRanking(players: PlayerProfileWithStats[]) {
   const playersGeneralRanking = players
     .map((player) => {
       const stats = getPlayerStats(player);

@@ -16,6 +16,7 @@ export class CreatePlayerProfileController {
       greenShirtpicture = null,
       whiteShirtpicture = null,
       currentPicture = null,
+      role = 'PERMANENT',
     } = req.body as ICreatePlayerProfileDTO;
     try {
       const slug = slugify(name);
@@ -31,6 +32,7 @@ export class CreatePlayerProfileController {
         currentPicture,
         shirtNumber,
         slug,
+        role,
       });
 
       res.status(201).json(newPlayerProfile);

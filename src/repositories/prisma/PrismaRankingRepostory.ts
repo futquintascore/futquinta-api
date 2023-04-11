@@ -1,3 +1,4 @@
+import { PlayerProfileWithStats } from '../../../index';
 import { getGeneralRanking } from '../../functions/getGeneralRank';
 import { PlayersProfile } from '../../services/prismaClient';
 import { IRankingsRepository } from './../IRankingsRepository';
@@ -16,7 +17,8 @@ export class PrismaRankingRepository implements IRankingsRepository {
           MOTM: true,
         },
       });
-      const rank = getGeneralRanking(allPlayers).map(
+      const allPlayersConverted = allPlayers as unknown as PlayerProfileWithStats[];
+      const rank = getGeneralRanking(allPlayersConverted).map(
         ({ position, name, points, slug, totalGames, draws, gamesRecord }) => {
           return {
             position,

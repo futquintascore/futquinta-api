@@ -38,6 +38,11 @@ enum Result {
   DRAW
 }
 
+enum PlayerProfileRole {
+  PERMANENT
+  GUEST
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -47,25 +52,26 @@ model User {
 }
 
 model PlayerProfile {
-  id                Int            @id @default(autoincrement())
-  name              String         @unique
-  slug              String         @unique
+  id                Int               @id @default(autoincrement())
+  name              String            @unique
+  slug              String            @unique
   greenShirtpicture String?
   whiteShirtpicture String?
   currentPicture    String?
   shirtNumber       Int?
   goals             Int
   assists           Int
-  goalsConceded     Int?           @default(0)
+  goalsConceded     Int?              @default(0)
   victories         Int
   defeats           Int
   draws             Int
-  function          PlayerFunction @default(OUTFIELDPLAYER)
-  createdAt         DateTime       @default(now()) @map("created_at")
-  updatedAt         DateTime       @updatedAt @map("updated_at")
+  function          PlayerFunction    @default(OUTFIELDPLAYER)
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
   Stats             PlayerStats[]
   games             Game[]
   MOTM              MOTM[]
+  role              PlayerProfileRole @default(PERMANENT)
 
   @@map("players")
 }

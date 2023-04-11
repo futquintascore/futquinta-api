@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { getGerenalRankingController } from '../useCases/get-general-ranking';
 
 const router = Router();
-router.get('/', (req, res) => {});
+
 router.get('/general-ranking', (req, res) => {
   return getGerenalRankingController.handle(req, res);
 });

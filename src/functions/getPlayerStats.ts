@@ -1,4 +1,4 @@
-import { PlayerProfile } from '@prisma/client';
+import { PlayerProfileWithStats } from './../../index.d';
 export const getGamesRecord = (
   totalOfGames: number,
   vic: number,
@@ -11,7 +11,7 @@ export const getGamesRecord = (
 
   return +record;
 };
-export function getPlayerStats(player: PlayerProfile) {
+export function getPlayerStats(player: PlayerProfileWithStats) {
   const { function: playerFunction, Stats } = player;
   const goals = Stats.map((stat) => stat.goals).reduce(
     (acc, current) => acc + current,
