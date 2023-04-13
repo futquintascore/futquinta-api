@@ -1,7 +1,7 @@
 import { IAddPlayerToGameDTO } from './../../useCases/add-player-to-game/add-player-to-game-dto';
 import { PlayerStats } from './../../entities/PlayerStats';
 import { IPlayerStatsRepository } from './../IPlayerStatsRepository';
-import { prisma } from '../../services/prismaClient';
+import { PlayersStats, prisma } from '../../services/prismaClient';
 type PlayerData = {
   id: number;
   name: string;
@@ -10,7 +10,7 @@ type PlayerData = {
 };
 import { Game } from '../../entities/Game';
 import { Prisma } from '@prisma/client';
-import { updatePlayerStats } from '../../functions/update-player-stat';
+
 export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
   async addToGame({
     name,
@@ -179,8 +179,16 @@ export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
   }
   async update(gameId: number, statId: number, _reqBody: any): Promise<Game> {
     try {
-      const currentGame = await updatePlayerStats(gameId, statId, _reqBody);
-      return currentGame;
+      // const currentGame = await updatePlayerStats(gameId, statId, _reqBody);
+      const statUpdated = await PlayersStats.update({
+        where: {
+          id: statId,
+        },
+        data: {
+          ..._reqBody,
+        },
+      });
+      return statUpdated as unknown as Game;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         throw new Error('Unable to find playerstat in the database');
