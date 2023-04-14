@@ -3,6 +3,7 @@ import { PlayerProfileWithStats } from './../../index.d';
 
 export function getGeneralRanking(players: PlayerProfileWithStats[]) {
   const playersGeneralRanking = players
+    .filter((player) => player.role === 'PERMANENT')
     .map((player) => {
       const stats = getPlayerStats(player);
       const { id, name, slug } = player;
