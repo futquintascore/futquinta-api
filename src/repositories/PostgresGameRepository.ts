@@ -104,6 +104,7 @@ export class PostgresGameRepository implements IGamesRepository {
         data: {
           whiteGoals,
           greenGoals,
+          status: 'IN_PROGRESS',
         },
       });
       return newGame;
