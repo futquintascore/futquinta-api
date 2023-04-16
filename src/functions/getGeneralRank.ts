@@ -6,11 +6,15 @@ export function getGeneralRanking(players: PlayerProfileWithStats[]) {
     .filter((player) => player.role === 'PERMANENT' && player.name !== 'Convidados')
     .map((player) => {
       const stats = getPlayerStats(player);
-      const { id, name, slug } = player;
+      const { id, name, slug, currentPicture, whiteShirtpicture, greenShirtpicture } =
+        player;
       return {
         id,
         name,
         slug,
+        currentPicture,
+        whiteShirtpicture,
+        greenShirtpicture,
         ...stats,
       };
     })

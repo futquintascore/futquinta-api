@@ -19,7 +19,18 @@ export class PrismaRankingRepository implements IRankingsRepository {
       });
       const allPlayersConverted = allPlayers as unknown as PlayerProfileWithStats[];
       const rank = getGeneralRanking(allPlayersConverted).map(
-        ({ position, name, points, slug, totalGames, draws, gamesRecord }) => {
+        ({
+          position,
+          name,
+          points,
+          slug,
+          totalGames,
+          draws,
+          gamesRecord,
+          whiteShirtpicture,
+          greenShirtpicture,
+          currentPicture,
+        }) => {
           return {
             position,
             name,
@@ -28,6 +39,7 @@ export class PrismaRankingRepository implements IRankingsRepository {
             totalGames,
             draws,
             gamesRecord,
+            picture: currentPicture === 'WHITE' ? whiteShirtpicture : greenShirtpicture,
           };
         }
       );
