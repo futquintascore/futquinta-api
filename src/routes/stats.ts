@@ -6,6 +6,8 @@ import { deletePlayerStatController } from '../useCases/delete-player-stats';
 import { authMiddleware } from '../middlewares/auth';
 
 import { addPlayerToGameController } from '../useCases/add-player-to-game';
+import { incrementPlayerInGameGoalsController } from '../useCases/increment-player-in-game-goals';
+import { decrementPlayerInGameGoalsController } from '../useCases/decrement-player-in-game-goals';
 
 const statRoute = Router();
 
@@ -39,6 +41,12 @@ statRoute.delete(
 );
 statRoute.post('/:gameId/:playerId', async (req, res) => {
   return addPlayerToGameController.handle(req, res);
+});
+statRoute.get('/goals/increment/:id', (req, res) => {
+  return incrementPlayerInGameGoalsController.handle(req, res);
+});
+statRoute.get('/goals/decrement/:id', (req, res) => {
+  return decrementPlayerInGameGoalsController.handle(req, res);
 });
 
 export default statRoute;

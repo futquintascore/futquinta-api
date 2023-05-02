@@ -8,6 +8,8 @@ import { finishGameController } from '../useCases/finish-game';
 import { authMiddleware } from '../middlewares/auth';
 import { uploadGamePictureController } from '../useCases/upload-game-picture';
 import { parser } from '../services/upload';
+import { incrementGoalsController } from '../useCases/increment-game-goals';
+import { decrementGoalsController } from '../useCases/decrement-game-goals';
 
 const gameRouter = Router();
 //*List
@@ -66,4 +68,10 @@ gameRouter.put(`/picture/:id`, parser.single('game_picture'), (req, res) => {
   return uploadGamePictureController.handle(req, res);
 });
 
+gameRouter.put('/goals/increment/:id', (req, res) => {
+  return incrementGoalsController.handle(req, res);
+});
+gameRouter.put('/goals/decrement/:id', (req, res) => {
+  return decrementGoalsController.handle(req, res);
+});
 export default gameRouter;

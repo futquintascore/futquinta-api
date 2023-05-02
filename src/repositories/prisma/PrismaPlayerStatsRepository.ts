@@ -12,6 +12,40 @@ import { Game } from '../../entities/Game';
 import { Prisma } from '@prisma/client';
 
 export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
+  async incrementGoals(id: number): Promise<PlayerStats> {
+    try {
+      const updatedStat = PlayersStats.update({
+        where: {
+          id,
+        },
+        data: {
+          goals: {
+            increment: 1,
+          },
+        },
+      });
+      return updatedStat;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
+  async decrementGoals(id: number): Promise<PlayerStats> {
+    try {
+      const updatedStat = PlayersStats.update({
+        where: {
+          id,
+        },
+        data: {
+          goals: {
+            decrement: 1,
+          },
+        },
+      });
+      return updatedStat;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
   async addToGame({
     name,
     currentTeam,

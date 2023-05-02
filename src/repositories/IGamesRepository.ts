@@ -1,3 +1,4 @@
+import { Team } from './../../index.d';
 import { Game } from '../entities/Game';
 
 export interface IGamesRepository {
@@ -8,4 +9,6 @@ export interface IGamesRepository {
   delete(id: number): Promise<Game>;
   finishGame(id: number, winnerTeam: 'GREEN' | 'WHITE' | 'DRAW'): Promise<Game>;
   setGamePicture(id: number, imageUrl: string): Promise<Game>;
+  incrementGoals(id: number, team: Team): Promise<Game>;
+  decrementGoals(id: number, team: Team): Promise<Game>;
 }

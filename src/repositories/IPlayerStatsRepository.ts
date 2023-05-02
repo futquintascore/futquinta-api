@@ -7,4 +7,6 @@ export interface IPlayerStatsRepository {
   update(gameId: number, statId: number, _reqBody: any): Promise<Game>;
   delete(statId: number): Promise<PlayerStats>;
   addToGame(data: IAddPlayerToGameDTO): Promise<PlayerStats>;
+  incrementGoals(id: number): Promise<PlayerStats>;
+  decrementGoals(id: number): Promise<PlayerStats>;
 }

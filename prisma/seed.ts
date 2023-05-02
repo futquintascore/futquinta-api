@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 async function main() {
 
   for (let i = 0;i<20;i++){
-    const name = faker.name.fullName()
+    const name = faker.name.firstName()
     await prisma.playerProfile.create({
       data:{
         name,

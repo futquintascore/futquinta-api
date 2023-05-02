@@ -5,7 +5,68 @@ import { finishGameFunction } from '../functions/finish-game';
 
 import { GameModel, MOTMModel } from '../services/prismaClient';
 import { IGamesRepository } from './IGamesRepository';
+import { Team } from './../../index.d';
 export class PostgresGameRepository implements IGamesRepository {
+  async decrementGoals(id: number, team: Team): Promise<Game> {
+    try {
+      if (team === 'WHITE') {
+        const data = await GameModel.update({
+          where: {
+            id,
+          },
+          data: {
+            whiteGoals: {
+              decrement: 1,
+            },
+          },
+        });
+        return data;
+      }
+      const data = await GameModel.update({
+        where: {
+          id,
+        },
+        data: {
+          greenGoals: {
+            decrement: 1,
+          },
+        },
+      });
+      return data;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
+  async incrementGoals(id: number, team: Team): Promise<Game> {
+    try {
+      if (team === 'WHITE') {
+        const data = await GameModel.update({
+          where: {
+            id,
+          },
+          data: {
+            whiteGoals: {
+              increment: 1,
+            },
+          },
+        });
+        return data;
+      }
+      const data = await GameModel.update({
+        where: {
+          id,
+        },
+        data: {
+          greenGoals: {
+            increment: 1,
+          },
+        },
+      });
+      return data;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
   async setGamePicture(id: number, imageUrl: string): Promise<Game> {
     try {
       const newPicture = await GameModel.update({

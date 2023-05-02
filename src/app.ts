@@ -23,6 +23,9 @@ class App {
     this.app.use(cors());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    // this.app.use(function (req, res, next) {
+    //   setTimeout(next, 3000);
+    // });
   }
   routes(): void {
     this.app.use('/v1/games', gameRouter);
