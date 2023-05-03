@@ -159,13 +159,14 @@ export class PostgresGameRepository implements IGamesRepository {
       throw err;
     }
   }
-  async save({ whiteGoals = 0, greenGoals = 0 }: Game): Promise<Game> {
+  async save({ whiteGoals = 0, greenGoals = 0, gameDate }: Game): Promise<Game> {
     try {
       const newGame = await GameModel.create({
         data: {
           whiteGoals,
           greenGoals,
           status: 'NOT_STARTED',
+          gameDate: gameDate,
         },
       });
       return newGame;

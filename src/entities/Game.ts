@@ -9,9 +9,11 @@ export class Game {
   createdAt?: Date;
   updatedAt?: Date;
   playerId?: number | null;
+  gameDate: Date;
 
   constructor(props: Game) {
     this.whiteGoals = props.whiteGoals;
     this.greenGoals = props.greenGoals;
+    this.gameDate = props.gameDate;
   }
 }
