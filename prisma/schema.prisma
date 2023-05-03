@@ -90,6 +90,7 @@ model Game {
   playerId    Int?            @unique
   slug        String?         @unique
   gamePicture String?
+  gameDate    DateTime        @default(now())
 
   @@map("games")
 }

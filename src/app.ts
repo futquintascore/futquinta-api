@@ -24,7 +24,7 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     // this.app.use(function (req, res, next) {
-    //   setTimeout(next, 3000);
+    //   setTimeout(next, 1500);
     // });
   }
   routes(): void {
