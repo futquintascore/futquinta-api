@@ -14,7 +14,6 @@ export class UpdatePlayerStatsController {
       );
       res.status(200).json(updatedStat);
     } catch (err: any) {
-      console.log(err);
       res.status(400).json(err.message);
     }
   }

@@ -7,7 +7,7 @@ export class IncrementGoalsController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
     const { team } = req.body;
-    console.log(team);
+
     try {
       await this.IncrementGoalsUseCase.execute(+id, team);
 

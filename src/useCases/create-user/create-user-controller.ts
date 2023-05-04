@@ -20,7 +20,6 @@ export class CreateUserController {
           `User with email ${newUser.email} and id ${newUser.id}created with success`
         );
     } catch (err: any) {
-      console.log(err.code);
       res.status(400).json({ message: err.message });
     }
   }

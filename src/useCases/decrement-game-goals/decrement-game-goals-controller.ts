@@ -8,7 +8,7 @@ export class DecrementGoalsController {
   async handle(req: Request, res: Response) {
     const { id } = req.params;
     const { team } = req.body;
-    console.log(team);
+
     try {
       await this.DecrementGoalsUseCase.execute(+id, team);
 

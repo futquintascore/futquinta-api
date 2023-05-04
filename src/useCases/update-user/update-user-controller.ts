@@ -9,7 +9,6 @@ export class UpdateUserController {
 
       res.status(200).json(updatedUser);
     } catch (err: any) {
-      console.log(err);
       res.status(400).json({ message: err.message });
     }
   }

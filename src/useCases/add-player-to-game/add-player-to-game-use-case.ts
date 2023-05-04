@@ -1,4 +1,3 @@
-import { PlayerStats } from './../../entities/PlayerStats';
 import { IPlayerStatsRepository } from './../../repositories/IPlayerStatsRepository';
 import { IAddPlayerToGameDTO } from './add-player-to-game-dto';
 export class AddPlayerToGameUseCase {

@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { Router } from 'express';
 import { createUserController } from '../useCases/create-user';
 import { deleteUsetController } from '../useCases/delete-user';

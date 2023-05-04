@@ -46,7 +46,6 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
 
       return listPlayerById;
     } catch (err) {
-      console.log(err);
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
           throw new Error('Unable to find player in the database');
@@ -66,7 +65,6 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       return updatedPlayer;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        console.log(err);
         if (err.code === 'P2025') {
           throw new Error('Unable to find player in the database');
         }
@@ -82,7 +80,6 @@ export class PostgresPlayerProfileRepository implements IPlayerProfileRepository
       return deletedUser;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        console.log(err);
         if (err.code === 'P2025') {
           throw new Error('Unable to find player in the database');
         }
