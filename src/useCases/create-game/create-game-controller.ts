@@ -1,9 +1,10 @@
 import { CreateGameUseCase } from './create-game-usecase';
-import e, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 export class CreateGameController {
   constructor(private CreateGameUseCase: CreateGameUseCase) {}
   async handle(req: Request, res: Response) {
     const { whiteGoals, greenGoals, gameDate } = req.body;
+
     try {
       const newGame = await this.CreateGameUseCase.execute({
         greenGoals,
@@ -13,7 +14,7 @@ export class CreateGameController {
 
       res.status(201).json(newGame);
     } catch (err) {
-      res.status(400).json(e);
+      res.status(400).json('caiu aqui');
     }
   }
 }

@@ -12,7 +12,7 @@ export class CreateGameUseCase {
     return await this.GamesRepository.save({
       greenGoals,
       whiteGoals,
-      gameDate: gameDate,
+      gameDate,
     });
   }
 }

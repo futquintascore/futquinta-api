@@ -166,9 +166,10 @@ export class PostgresGameRepository implements IGamesRepository {
           whiteGoals,
           greenGoals,
           status: 'NOT_STARTED',
-          gameDate: gameDate,
+          gameDate: new Date(gameDate),
         },
       });
+
       return newGame;
     } catch (err) {
       throw new Error('Internal Server Error');
