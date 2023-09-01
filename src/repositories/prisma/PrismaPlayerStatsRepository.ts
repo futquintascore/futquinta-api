@@ -206,7 +206,7 @@ export class PrismaPlayerStatsRepository implements IPlayerStatsRepository {
         return currentGame;
       });
 
-      return currentGameUpdated;
+      return currentGameUpdated as Game;
     } catch (err: any) {
       throw new Error(err.message);
     }

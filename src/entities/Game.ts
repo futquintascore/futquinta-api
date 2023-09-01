@@ -3,6 +3,7 @@ export class Game {
   whiteGoals: number;
   greenGoals: number;
   winnerTeam?: 'WHITE' | 'GREEN' | 'DRAW';
+  fixture: number;
   whiteMOTM?: string;
   greenMOTM?: string;
   status?: 'NOT_STARTED' | 'IN_PROGRESS' | 'FINISHED';
@@ -15,5 +16,6 @@ export class Game {
     this.whiteGoals = props.whiteGoals;
     this.greenGoals = props.greenGoals;
     this.gameDate = props.gameDate;
+    this.fixture = props.fixture;
   }
 }

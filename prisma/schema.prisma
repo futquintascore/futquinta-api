@@ -95,6 +95,7 @@ model Game {
   slug        String?         @unique
   gamePicture String?
   gameDate    DateTime
+  fixture     Int?
 
   @@map("games")
 }

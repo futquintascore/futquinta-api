@@ -8,11 +8,14 @@ export class CreateGameUseCase {
     whiteGoals,
     greenGoals,
     gameDate,
+    fixture,
   }: IGamesRepositoryDTO): Promise<Game> {
+    if (!fixture) throw new Error('É necessário informar rodada');
     return await this.GamesRepository.save({
       greenGoals,
       whiteGoals,
       gameDate,
+      fixture,
     });
   }
 }

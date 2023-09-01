@@ -20,7 +20,7 @@ export class PostgresGameRepository implements IGamesRepository {
             },
           },
         });
-        return data;
+        return data as Game;
       }
       const data = await GameModel.update({
         where: {
@@ -32,7 +32,7 @@ export class PostgresGameRepository implements IGamesRepository {
           },
         },
       });
-      return data;
+      return data as Game;
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -50,7 +50,7 @@ export class PostgresGameRepository implements IGamesRepository {
             },
           },
         });
-        return data;
+        return data as Game;
       }
       const data = await GameModel.update({
         where: {
@@ -62,7 +62,7 @@ export class PostgresGameRepository implements IGamesRepository {
           },
         },
       });
-      return data;
+      return data as Game;
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -78,7 +78,7 @@ export class PostgresGameRepository implements IGamesRepository {
         },
       });
 
-      return newPicture;
+      return newPicture as Game;
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -87,7 +87,7 @@ export class PostgresGameRepository implements IGamesRepository {
     try {
       const finishedGame = await finishGameFunction(id, winnerTeam);
 
-      return finishedGame;
+      return finishedGame as Game;
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -107,7 +107,7 @@ export class PostgresGameRepository implements IGamesRepository {
           },
         });
       }
-      return deletedGame;
+      return deletedGame as Game;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         throw new Error('Unable to find game in the database');
@@ -121,7 +121,7 @@ export class PostgresGameRepository implements IGamesRepository {
         where: { id },
         data: { ..._reqBody },
       });
-      return updatedGame;
+      return updatedGame as Game;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         throw new Error('Unable to find game in the database');
@@ -151,7 +151,7 @@ export class PostgresGameRepository implements IGamesRepository {
         },
       });
 
-      return singleGame;
+      return singleGame as Game;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         throw new Error('Unable to find game in the database');
@@ -159,7 +159,7 @@ export class PostgresGameRepository implements IGamesRepository {
       throw err;
     }
   }
-  async save({ whiteGoals = 0, greenGoals = 0, gameDate }: Game): Promise<Game> {
+  async save({ whiteGoals = 0, greenGoals = 0, gameDate, fixture }: Game): Promise<Game> {
     try {
       const newGame = await GameModel.create({
         data: {
@@ -167,10 +167,11 @@ export class PostgresGameRepository implements IGamesRepository {
           greenGoals,
           status: 'NOT_STARTED',
           gameDate: new Date(gameDate),
+          fixture,
         },
       });
 
-      return newGame;
+      return newGame as Game;
     } catch (err) {
       throw new Error('Internal Server Error');
     }
@@ -188,7 +189,7 @@ export class PostgresGameRepository implements IGamesRepository {
             createdAt: 'desc',
           },
         });
-        return gamesList;
+        return gamesList as Game[];
       }
 
       if (filter === 'not_started') {
@@ -200,7 +201,7 @@ export class PostgresGameRepository implements IGamesRepository {
             createdAt: 'desc',
           },
         });
-        return gamesList;
+        return gamesList as Game[];
       }
 
       if (filter === 'finished') {
@@ -212,7 +213,7 @@ export class PostgresGameRepository implements IGamesRepository {
             createdAt: 'desc',
           },
         });
-        return gamesList;
+        return gamesList as Game[];
       }
 
       const gamesList = await GameModel.findMany({
@@ -220,7 +221,7 @@ export class PostgresGameRepository implements IGamesRepository {
           createdAt: 'desc',
         },
       });
-      return gamesList;
+      return gamesList as Game[];
     } catch (err) {
       throw new Error('Internal Server Error');
     }
