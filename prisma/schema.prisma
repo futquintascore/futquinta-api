@@ -76,6 +76,7 @@ model PlayerProfile {
   games             Game[]
   MOTM              MOTM[]
   role              PlayerProfileRole @default(PERMANENT)
+  oldSeason         OldSeason[]
 
   @@map("players")
 }
@@ -126,4 +127,17 @@ model MOTM {
   team            Team
   playerProfileId Int
   Game            Game[]
+}
+
+model OldSeason {
+  id            Int            @id @default(autoincrement())
+  year          Int
+  goals         Int            @default(0)
+  goalsConceded Int            @default(0)
+  victories     Int
+  defeats       Int
+  draws         Int
+  motmPoints    Int
+  player        PlayerProfile? @relation(fields: [playerId], references: [id])
+  playerId      Int?
 }
