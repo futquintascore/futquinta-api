@@ -25,3 +25,26 @@ export class GeneralRanking {
     this.playerId = playerId;
   }
 }
+
+// nome, id, gols sofridos,jogos
+export class GoalkeepersRanking {
+  playerId: number;
+  name: string;
+  goalsConceded: number;
+  games: number;
+  averageGoalsPerGame: number;
+
+  constructor({
+    games,
+    goalsConceded,
+    name,
+    playerId,
+    averageGoalsPerGame,
+  }: GoalkeepersRanking) {
+    this.games = games;
+    this.goalsConceded = goalsConceded;
+    this.name = name;
+    this.playerId = playerId;
+    this.averageGoalsPerGame = averageGoalsPerGame;
+  }
+}
