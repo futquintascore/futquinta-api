@@ -34,6 +34,7 @@ async function main() {
             year: 2023,
             goals: player.goals,
             goalsConceded: player.goalsConceded,
+            motmPoints: player.mvp,
           };
         }),
       });
