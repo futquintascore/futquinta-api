@@ -14,6 +14,10 @@ export class PrismaRankingRepository implements IRankingsRepository {
   async getRecordRanking(): Promise<RecordRanking[]> {
     try {
       const allPlayers = await PlayersProfile.findMany({
+        where:{
+          role:"PERMANENT"
+        },
+
         include: {
           Stats: {
             include: {
