@@ -15,7 +15,8 @@ export class PrismaRankingRepository implements IRankingsRepository {
     try {
       const allPlayers = await PlayersProfile.findMany({
         where:{
-          role:"PERMANENT"
+          role:"PERMANENT",
+          
         },
 
         include: {
@@ -69,6 +70,7 @@ export class PrismaRankingRepository implements IRankingsRepository {
         PlayersProfile.findMany({
           where: {
             function: 'GOALKEEPER',
+            role:"PERMANENT"
           },
           include: {
             Stats: {
