@@ -70,7 +70,6 @@ export class PrismaRankingRepository implements IRankingsRepository {
         PlayersProfile.findMany({
           where: {
             function: 'GOALKEEPER',
-            role:"PERMANENT"
           },
           include: {
             Stats: {
@@ -100,7 +99,7 @@ export class PrismaRankingRepository implements IRankingsRepository {
         };
       });
 
-      return goalkeepersRanking;
+      return goalkeepersRanking.filter((gk)=>gk.name !== 'Rafael');
     } catch (err: any) {
       console.log(err);
     }
